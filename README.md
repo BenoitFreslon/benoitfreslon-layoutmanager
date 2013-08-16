@@ -1,7 +1,7 @@
 benoitfreslon-layoutmanager
 ===========================
 
-A WYSIWYG layout manager. Build with Flash IDE for the Starling framework and compatible with the CitrusEngine framework.
+A visual layout manager. Build with Flash IDE for the Starling framework and compatible with the CitrusEngine framework.
 
 ### INSTALLATION
 
@@ -11,11 +11,15 @@ A WYSIWYG layout manager. Build with Flash IDE for the Starling framework and co
 * Copy the **sample.fla** file from the **benoitfreslon-layoutmanager/sample** folder in your own folder
 * Open the **sample.fla** file with Flash IDE and set the source path to the src folder: **benoitfreslon-layoutmanager/src**
 * Build the **sample.swc** with Flash IDE
-* Add the **sample.swc** in your ActionScript 3.0 project
+* Add the **sample.swc** in the library project
 
 
 ### USAGE
 
+#### In Flash IDE
+
+
+#### Source examle
 ```
 package  
 {
