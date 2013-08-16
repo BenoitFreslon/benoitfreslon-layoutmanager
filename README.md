@@ -27,7 +27,7 @@ You also can create a new MovieClip in the layout editor in Flash IDE that exten
 var params:Object = {className:"MyCustomClass", upState: "btn_start_upState", downState: "btn_start_downState"};
 ```
 
-Add parameters variables if you want to set default parameters and additional parameters in the MovieClip:
+Add parameters variables if you want to set default parameters and additional parameters in the MovieClip in Flash IDE:
 ```
 var params:Object = {myCustomParam: 42};
 ```
