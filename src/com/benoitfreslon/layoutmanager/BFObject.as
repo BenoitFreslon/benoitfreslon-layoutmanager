@@ -18,9 +18,6 @@ package com.benoitfreslon.layoutmanager
 		[Inspectable(name = "visible",type = "Boolean", defaultValue="true")]
 		public var isVisible:Boolean = true;
 		
-		[Inspectable(name = "alpha",type = "Number", defaultValue="1")]
-		public var setAlpha:Number = 1;
-		
 		[Inspectable(name = "Position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]
 		public var position:String;
 		

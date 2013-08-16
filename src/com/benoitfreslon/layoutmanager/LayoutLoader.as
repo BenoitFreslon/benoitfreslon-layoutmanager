@@ -81,9 +81,9 @@ package com.benoitfreslon.layoutmanager {
 						obj.y = child.y;
 						//obj.scaleX = child.scaleX;
 						//obj.scaleY = child.scaleY;
+						obj.alpha = child.alpha;
 						obj.rotation = child.rotation;
 						obj.visible = child.isVisible;
-						obj.alpha = child.setAlpha;
 						_displayObject.addChild( obj );
 						
 						if ( obj.hasOwnProperty( "tag" ) ) {
