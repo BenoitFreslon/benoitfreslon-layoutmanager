@@ -3,7 +3,7 @@ benoitfreslon-layoutmanager
 
 A WYSIWYG layout manager. Build with Flash IDE for the Starling framework and compatible with the CitrusEngine framework.
 
-## INSTALLATION
+### INSTALLATION
 
 * Create an ActionScript 3.0 project
 * Add [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework or the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework in your project
