@@ -44,15 +44,15 @@ package com.benoitfreslon.layoutmanager {
 		[Inspectable( name="enabled",type="Boolean",defaultValue="true" )]
 		public var isEnabled : Boolean = false;
 		
-		[Inspectable( name="Texture upState",type="String" )]
+		[Inspectable( name="upState",type="String" )]
 		public var upState : String = "";
 		
-		[Inspectable( name="Texture downState",type="String" )]
+		[Inspectable( name="downState",type="String" )]
 		public var downState : String = "";
 		
 		public function BFButton() {
 			super();
-			 mainClass = "starling.display.Button";
+			 mainClass = "starling.display.ButtonExtended";
 		}
 	
 	}

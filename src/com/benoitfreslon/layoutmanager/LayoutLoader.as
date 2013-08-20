@@ -20,6 +20,7 @@ package com.benoitfreslon.layoutmanager {
 		private var _movieclip : MovieClip;
 		private var _displayObject : DisplayObjectContainer;
 		private var _assetManager : AssetManager;
+		static public var debug:Boolean = false;
 		private var onLoad : Function = function() : void {
 		};
 		
@@ -57,7 +58,7 @@ package com.benoitfreslon.layoutmanager {
 						var obj : DisplayObject;
 						if ( child.mainClass == "starling.display.Image" ) {
 							obj = addImage( objectClass, child as BFImage );
-						} else if ( child.mainClass == "starling.display.Button" ) {
+						} else if ( child.mainClass == "starling.display.ButtonExtended" ) {
 							obj = addButton( objectClass, child as BFButton );
 						} else if ( child.mainClass == "starling.text.TextField" ) {
 							obj = addTextField( objectClass, child as BFTextField );
@@ -144,12 +145,12 @@ package com.benoitfreslon.layoutmanager {
 			bt.fontName = child.fontName;
 			bt.fontSize = child.fontSize;
 			bt.text = child.text;
-			//bt.pivotX 		= bt.width / 2;
-			//bt.pivotY		= bt.height / 2;
+			//bt.pivotX 		= bt.width / 2; 
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
-			
+			trace(child.onTouch, bt.hasOwnProperty( "onTouch" ), _displayObject.hasOwnProperty( child.onTouch ));
 			if ( bt.hasOwnProperty( "onTouch" ) && _displayObject.hasOwnProperty( child.onTouch ) ) {
+				trace(bt[ "onTouch" ], child.onTouch)
 				bt[ "onTouch" ] = _displayObject[ child.onTouch ];
 			} else if (bt.hasOwnProperty( "onTouch" )) {
 				trace( new Error("The public method " + child.onTouch + " is not defined in " + _displayObject));

@@ -12,13 +12,13 @@ package com.benoitfreslon.layoutmanager
 		[Inspectable(name = "tag",type = "Number")]
 		public var tag:Number = 0;
 		
-		[Inspectable(name = "Class",type = "String")]
+		[Inspectable(name = "className",type = "String")]
 		public var className:String = "";
 		
 		[Inspectable(name = "visible",type = "Boolean", defaultValue="true")]
 		public var isVisible:Boolean = true;
 		
-		[Inspectable(name = "Position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]
+		[Inspectable(name = "position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]
 		public var position:String;
 		
 		public var mainClass:String = "";
