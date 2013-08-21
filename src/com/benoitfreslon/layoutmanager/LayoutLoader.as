@@ -148,9 +148,7 @@ package com.benoitfreslon.layoutmanager {
 			//bt.pivotX 		= bt.width / 2; 
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
-			trace(child.onTouch, bt.hasOwnProperty( "onTouch" ), _displayObject.hasOwnProperty( child.onTouch ));
 			if ( bt.hasOwnProperty( "onTouch" ) && _displayObject.hasOwnProperty( child.onTouch ) ) {
-				trace(bt[ "onTouch" ], child.onTouch)
 				bt[ "onTouch" ] = _displayObject[ child.onTouch ];
 			} else if (bt.hasOwnProperty( "onTouch" )) {
 				trace( new Error("The public method " + child.onTouch + " is not defined in " + _displayObject));
