@@ -6,9 +6,22 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 
 ## Description
 
-* Use Flash IDE to compose a visual layout.
+* Use Flash IDE to build visual layouts.
+* Build your layouts with native Starling objects (Sprite, Image, TextField, Button).
 * Use the custom Flash components and use the LayoutLoader class to display the layout in real time in your game.
 * Use the basic class of Starling of use your own classes.
+* Use natives properties of Starling classes (texture, text, color, font, etc.).
+* Use instance name in Flash IDE and get objects in your class.
+* Add customs parameters in your own visual objects.
+* Use the Sprite container to embed several objects in one visual object.
+* Just build one lightweight .SWC file with all your layouts.
+
+### TODO
+* Use the scale property from MovieClip.
+* Use relative and absolute coordinates for HD format.
+* Use Flash native components.
+* Build AIR Application.
+* Display assets in the layout editor.
 
 Flash Components
 
@@ -47,18 +60,26 @@ public var btn_start:Button;
 
 **All parameter values are defined when the Layout is loaded.**
 
+### **BFSprite** - starling.display.Sprite
 
+A sprite container. Add objects inside this Sprite with Flash IDE.
 
-### BFImage - starling.display.Image
+### **BFImage** - starling.display.Image
 
-Set the texture name in the component parameter to load the texture.
+Set the texture name in the component parameter to load the Image with a texture.
 
-Parameters :
+Parameters:
 * texture
 
-#### **BFButton** - startling.display.Button
-* Texture upState
-* Texture downState
+#### **BFButton** - startling.display.ButtonExtented
+
+The simple Button from Starling extended.
+Set the onTouch method in the layout editor to automatically add a touch event.
+
+Parameters:
+
+* upState
+* downState
 * onTouch
 * text
 * fontName
@@ -67,6 +88,8 @@ Parameters :
 * ...
 
 ### **BFTextField** - startling.text.TextField
+
+Parameters:
 * text
 * fontName
 * fontSize
