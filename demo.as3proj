@@ -52,9 +52,8 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\starling.swc" />
-    <element path="demo\lib\starling.swc" />
     <element path="demo\assets\demo.swc" />
+    <element path="demo\lib\starling.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -90,5 +89,8 @@
     <option testMovie="Default" />
   </options>
   <!-- Plugin storage -->
-  <storage />
+  <storage>
+    <entry key="at_enabled"><![CDATA[0]]></entry>
+    <entry key="at_password"><![CDATA[]]></entry>
+  </storage>
 </project>

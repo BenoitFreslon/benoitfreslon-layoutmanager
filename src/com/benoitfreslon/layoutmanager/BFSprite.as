@@ -8,7 +8,7 @@ package com.benoitfreslon.layoutmanager {
 		
 		public function BFSprite() {
 			super();
-			mainClass = "starling.display.Sprite"
+			mainClass = "starling.display.Sprite";
 		}
 	
 	}
