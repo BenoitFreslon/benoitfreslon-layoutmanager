@@ -21,6 +21,15 @@ package com.benoitfreslon.layoutmanager
 		[Inspectable(name = "position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]
 		public var position:String;
 		
+		[Inspectable(name = "touchable", type = "Boolean", defaultValue = "true")]
+		public var touchable:Boolean = true;
+		
+		[Inspectable(name = "flipX", type = "Boolean", defaultValue = "false")]
+		public var flipX:Boolean = false;
+		
+		[Inspectable(name = "flipY", type = "Boolean", defaultValue = "false")]
+		public var flipY:Boolean = false;
+		
 		public var mainClass:String = "";
 		public var params:Object = { };
 		public function BFObject() 

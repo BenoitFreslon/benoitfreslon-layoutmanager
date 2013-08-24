@@ -14,9 +14,14 @@ package com.benoitfreslon.layoutmanager {
 	import starling.utils.AssetManager;
 	import starling.display.ButtonExtended;
 	
+	// TODO touchabe
+	// TODO flipX
+	// TODO flipY
+	// TODO enabled
+	
 	/**
 	 * Loader of Layout
-	 * @version 1.02
+	 * @version 1.03
 	 * @author Benoît Freslon
 	 */
 	public class LayoutLoader {
@@ -27,7 +32,7 @@ package com.benoitfreslon.layoutmanager {
 		private var onLoad : Function = function() : void {
 		};
 		/**
-		 * 
+		 * Loader of Layout class.
 		 */
 		public function LayoutLoader() {
 			super();
@@ -100,6 +105,12 @@ package com.benoitfreslon.layoutmanager {
 						obj.y = child.y;
 						//obj.scaleX = child.scaleX;
 						//obj.scaleY = child.scaleY;
+						if (child.flipX) {
+							obj.scaleX = -1;
+						}
+						if (child.flipY) {
+							obj.scaleY = -1;
+						}
 						obj.alpha = child.alpha;
 						obj.rotation = child.rotation;
 						obj.visible = child.isVisible;
@@ -166,6 +177,7 @@ package com.benoitfreslon.layoutmanager {
 			bt.fontColor = child.fontColor;
 			bt.fontName = child.fontName;
 			bt.fontSize = child.fontSize;
+			bt.alphaWhenDisabled = child.alphaWhenDisabled;
 			bt.text = child.text;
 			bt.pivotX = bt.width / 2;
 			bt.pivotY = bt.height / 2;
