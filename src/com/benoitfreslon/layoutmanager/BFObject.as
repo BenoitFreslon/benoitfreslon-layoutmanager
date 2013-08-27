@@ -8,9 +8,14 @@ package com.benoitfreslon.layoutmanager
 	 */
 	public class BFObject extends MovieClip 
 	{
+		//protected var _width:Number;
+		//protected var _height:Number;
 		
 		[Inspectable(name = "tag",type = "Number")]
 		public var tag:Number = 0;
+		
+		[Inspectable(name = "userData", type="String")]
+		public var userData:String = "";
 		
 		[Inspectable(name = "className",type = "String")]
 		public var className:String = "";
@@ -36,7 +41,14 @@ package com.benoitfreslon.layoutmanager
 		{
 			super();
 		}
-		
+		public function setSize(w:Number, h:Number):void {
+			//_width = w;
+			//_height = h;
+			draw();
+		}
+		protected function draw():void {
+			//super.draw();
+		}
 	}
 
 }

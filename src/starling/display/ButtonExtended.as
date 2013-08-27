@@ -8,7 +8,7 @@ package starling.display {
 	 */
 	public class ButtonExtended extends Button {
 		
-		public var onTouch : Function = function( e : Event ) : void { trace("ButtonExtented: The 'onTouch' method is not defined.")
+		public var onTouch : Function = function( e : Event ) : void { trace("ButtonExtented: The 'onTouch' method is not defined in " + this.name + "." );
 		};
 		
 		public function ButtonExtended( upState : Texture, text : String = "", downState : Texture = null ) {

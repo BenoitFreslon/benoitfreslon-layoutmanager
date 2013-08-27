@@ -29,6 +29,7 @@ package com.benoitfreslon.layoutmanager {
 		private var _displayObject : DisplayObjectContainer;
 		private var _assetManager : AssetManager;
 		//static public var debug : Boolean = false;
+		static public var renderMode:Boolean = false;
 		private var onLoad : Function = function() : void {
 		};
 		/**
@@ -47,6 +48,7 @@ package com.benoitfreslon.layoutmanager {
 		 * @param	callBack The callback function when the layout is loaded and displayed.
 		 */
 		public function loadLayout( displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			renderMode = true;
 			_displayObject = displayObject;
 			_assetManager = assetManager;
 			_movieclip = new LayoutClass();
@@ -101,8 +103,8 @@ package com.benoitfreslon.layoutmanager {
 						}
 						obj.name = child.name;
 						
-						obj.x = child.x;
-						obj.y = child.y;
+						obj.x = int(child.x);
+						obj.y = int(child.y);
 						//obj.scaleX = child.scaleX;
 						//obj.scaleY = child.scaleY;
 						if (child.flipX) {
@@ -120,7 +122,9 @@ package com.benoitfreslon.layoutmanager {
 						if ( obj.hasOwnProperty( "tag" ) ) {
 							obj[ "tag" ] = child.tag;
 						}
-						
+						if ( obj.hasOwnProperty( "userData" ) ) {
+							obj[ "userData" ] = child.userData;
+						}
 						if ( _displayObject.hasOwnProperty( child.name ) ) {
 							_displayObject[ child.name ] = obj as objectClass;
 						} else if ( child.name.split( "__id" ).length == 1 ) {
@@ -128,7 +132,7 @@ package com.benoitfreslon.layoutmanager {
 						}
 					} else {
 						
-						trace( new Error( "No className defined " + child ) );
+						//trace( new Error( "No className defined " + child ) );
 					}
 				}
 			}
@@ -143,8 +147,8 @@ package com.benoitfreslon.layoutmanager {
 		
 		private function addImage( objectClass : Class, child : BFImage ) : Image {
 			var img : Image = new objectClass( getTexture( child, child.texture, child.width, child.height ) ) as Image;
-			img.pivotX = img.width / 2;
-			img.pivotY = img.height / 2;
+			img.pivotX = int(img.width / 2);
+			img.pivotY = int(img.height / 2);
 			return img;
 		}
 		
@@ -166,8 +170,8 @@ package com.benoitfreslon.layoutmanager {
 			t.italic = child.italic;
 			t.border = child.border;
 			t.underline = child.underline;
-			t.pivotX = t.width / 2;
-			t.pivotY = t.height / 2;
+			t.pivotX = int(t.width / 2);
+			t.pivotY = int(t.height / 2);
 			return t;
 		}
 		
@@ -179,8 +183,8 @@ package com.benoitfreslon.layoutmanager {
 			bt.fontSize = child.fontSize;
 			bt.alphaWhenDisabled = child.alphaWhenDisabled;
 			bt.text = child.text;
-			bt.pivotX = bt.width / 2;
-			bt.pivotY = bt.height / 2;
+			bt.pivotX = int(bt.width / 2);
+			bt.pivotY = int(bt.height / 2);
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
 			if ( bt.hasOwnProperty( "onTouch" ) && _displayObject.hasOwnProperty( child.onTouch ) ) {
@@ -193,7 +197,7 @@ package com.benoitfreslon.layoutmanager {
 		
 		private function getTexture( child : BFObject, textureName : String, w : Number, h : Number ) : Texture {
 			if ( textureName == "" ) {
-				trace( new Error( "No texture defined in '" + child + "'. Default texture used." ) );
+				trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
 				return Texture.empty( w, h );
 			} else {
 				return _assetManager.getTexture( textureName );
