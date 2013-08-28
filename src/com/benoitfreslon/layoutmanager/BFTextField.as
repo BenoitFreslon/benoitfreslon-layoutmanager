@@ -32,7 +32,6 @@ package com.benoitfreslon.layoutmanager {
 		public function set border(value:Boolean):void 
 		{
 			_border = value;
-			_tf.border = _border;
 			draw();
 			
 		}
@@ -48,7 +47,6 @@ package com.benoitfreslon.layoutmanager {
 		{
 			
 			_color = value;
-			_tf.textColor = _color;
 			draw();
 		}
 		private var _color : uint = 0xFFFFFF;
@@ -147,19 +145,29 @@ package com.benoitfreslon.layoutmanager {
 		
 
 		
-		private var _tf:TextField = new TextField();
+		private var _tf:TextField;
 		
 		public function BFTextField() {
 			super();
 			mainClass = "starling.text.TextField";
-			addChild(_tf);
-			_tf.multiline = true;
+			if (!LayoutLoader.renderMode) {
+				_tf = new TextField();
+				addChild(_tf);
+				_tf.multiline = true;
+			}
+
 		}
 		protected override function draw():void 
 		{
 			super.draw();
-			//_text  = _text.split("n").join("<br />");
-			_text = _text.replace("\\n", "<br />")
+			if (LayoutLoader.renderMode)
+				return;
+				
+			
+			_text = _text.replace("\\n", "<br />");
+			
+			_tf.textColor = _color;
+			_tf.border = _border;
 			
 			var htmlItalic:String = "";
 			if (_italic)
@@ -170,11 +178,9 @@ package com.benoitfreslon.layoutmanager {
 			var htmlUnderline:String = "";
 			if (_underline)
 				htmlUnderline = "<u>";
-				
-			_tf.text = "";
-			_tf.htmlText = "";
+
 			_tf.htmlText = "<p align='" + _hAlign + "'>"+ htmlBold + htmlItalic + htmlUnderline + "<font face='" + _fontName + "' size='" + _fontSize + "' color='" + _color + "' >" + _text;
-			//_tf.text = _text;
+
 			_tf.width = scaleX*100;
 			_tf.height = scaleY*100;
 
@@ -186,12 +192,6 @@ package com.benoitfreslon.layoutmanager {
 			}
 			_tf.x = -_tf.width / 2;
 			_tf.y = -_tf.height / 2;
-			/*
-			graphics.clear();
-			graphics.beginFill(0x000000, 1);
-			graphics.drawRoundRect(-width/2, -height/2, width/2, height/2, 3, 3);
-			graphics.endFill();
-			*/
 		}
 	}
 
