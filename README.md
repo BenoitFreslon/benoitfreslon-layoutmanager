@@ -100,7 +100,7 @@ Parameters:
 
 * Create an ActionScript 3.0 project
 * Add the [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework or the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework in your project
-* Add the **benoitfreslon-layoutmanager/src** in the source path of your ActionScript 3.0 project
+* Add the **benoitfreslon-layoutmanager/src** and the **benoitfreslon-layoutmanager/srceditor** in the source path of your ActionScript 3.0 project
 * Copy the **sample.fla** file from the **benoitfreslon-layoutmanager/sample** folder in your own folder
 * Open the **sample.fla** file with Flash IDE and set the source path to the src folder: **benoitfreslon-layoutmanager/srceditor**
 * Build the **sample.swc** with Flash IDE
