@@ -17,6 +17,9 @@ package com.benoitfreslon.layoutmanager {
 		[Inspectable( name="alphaWhenDisabled",type="Number",defaultValue="0.5" )]
 		public var alphaWhenDisabled : Number = 0.5;
 		
+		[Inspectable( name="scaleWhenDown",type="Number",defaultValue="0.9" )]
+		public var scaleWhenDown : Number = 0.9;
+		
 		[Inspectable( name="fontColor",type="Color",defaultValue="#FFFFFF" )]
 		
 		public function get fontColor() : uint {
@@ -65,8 +68,10 @@ package com.benoitfreslon.layoutmanager {
 		public var upState : String = "";
 		
 		[Inspectable( name="downState",type="String" )]
-		
 		public var downState : String = "";
+		
+		[Inspectable( name="overState",type="String" )]
+		public var overState : String = "";
 		
 		public function BFButton() {
 			super();

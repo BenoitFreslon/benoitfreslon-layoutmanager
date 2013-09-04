@@ -102,7 +102,7 @@ Parameters:
 * Add the [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework or the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework in your project
 * Add the **benoitfreslon-layoutmanager/src** in the source path of your ActionScript 3.0 project
 * Copy the **sample.fla** file from the **benoitfreslon-layoutmanager/sample** folder in your own folder
-* Open the **sample.fla** file with Flash IDE and set the source path to the src folder: **benoitfreslon-layoutmanager/src**
+* Open the **sample.fla** file with Flash IDE and set the source path to the src folder: **benoitfreslon-layoutmanager/srceditor**
 * Build the **sample.swc** with Flash IDE
 * Add the **sample.swc** in the library project
 
@@ -117,11 +117,11 @@ Parameters:
 * Click OK
 * Add instances of BFImage, BFButton, BFTextField, etc.
 * Set an **instance name** if you want and set the ***onTouch*** method if you want in the BFButton instance
-* Scale, rotate, move all objects.
+* Move or rotate objects
 * Customise the components in the **Component parameters** panel
 * When it's done compile the swc
 
-### Source examle
+### Source example
 
 In your code source ;
 
@@ -162,17 +162,33 @@ package
 	 
     public class Game extends Sprite
     {
+		// Embed the Atlas XML
+		[Embed( source="../../demo/assets/atlas.xml",mimeType="application/octet-stream" )]
+		static public const AtlasXml : Class;
+		
+		// Embed the Atlas Texture:
+		[Embed( source="../../demo/assets/atlas.png" )]
+		static public const AtlasTexture : Class;
+		
+		private var assets:AssetManager;
+		
         public function Game()
         {
-		super();
-		var ll:LayoutLoader = new LayoutLoader();
-		ll.loadLayout(this, DemoLayout, Main.assets, onLoad);
+			super();
+			var texture : Texture = Texture.fromBitmap( new AtlasTexture() );
+			var xml : XML = XML( new AtlasXml() );
+			var atlas : TextureAtlas = new TextureAtlas( texture, xml );
+			assets = new AssetManager();
+			assets.addTextureAtlas( "assets", atlas );
+			
+			var ll:LayoutLoader = new LayoutLoader()
+			ll.loadLayout(this, DemoLayout, assets, onLoad);
         }
 		
-	private function onLoad():void 
-	{
-		// Layout loaded a displayed
-	}
+		private function onLoad():void 
+		{
+			// Layout loaded a displayed
+		}
     }
 }
 ```

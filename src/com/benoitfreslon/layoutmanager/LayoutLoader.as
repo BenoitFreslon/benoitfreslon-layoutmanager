@@ -1,4 +1,4 @@
-package com.benoitfreslon.layoutmanager {
+﻿package com.benoitfreslon.layoutmanager {
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -14,11 +14,6 @@ package com.benoitfreslon.layoutmanager {
 	import starling.utils.AssetManager;
 	import starling.display.ButtonExtended;
 	
-	// TODO touchabe
-	// TODO flipX
-	// TODO flipY
-	// TODO enabled
-	
 	/**
 	 * Loader of Layout
 	 * @version 1.03
@@ -27,10 +22,11 @@ package com.benoitfreslon.layoutmanager {
 	public class LayoutLoader {
 		private var _movieclip : MovieClip;
 		private var _displayObject : DisplayObjectContainer;
+		private var _rootObject:DisplayObjectContainer;
 		private var _assetManager : AssetManager;
 		//static public var debug : Boolean = false;
-		static public var renderMode:Boolean = false;
 		private var onLoad : Function = function() : void {
+		
 		};
 		/**
 		 * Loader of Layout class.
@@ -47,8 +43,17 @@ package com.benoitfreslon.layoutmanager {
 		 * @param	assetManager The AssetManager instance where all assets are loaded.
 		 * @param	callBack The callback function when the layout is loaded and displayed.
 		 */
-		public function loadLayout( displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
-			renderMode = true;
+		public function loadLayout( rootObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			_rootObject = rootObject;
+			_displayObject = rootObject;
+			_assetManager = assetManager;
+			_movieclip = new LayoutClass();
+			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
+			if ( onLoad != null )
+				onLoad = callBack
+		}
+		public function loadLayoutIn(rootObject:DisplayObjectContainer, displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			_rootObject = rootObject
 			_displayObject = displayObject;
 			_assetManager = assetManager;
 			_movieclip = new LayoutClass();
@@ -56,14 +61,13 @@ package com.benoitfreslon.layoutmanager {
 			if ( onLoad != null )
 				onLoad = callBack
 		}
-		
 		private function layoutLoaded( e : Event ) : void {
 			_movieclip.removeEventListener( Event.ENTER_FRAME, layoutLoaded );
-			parseMovieClip( _movieclip, _displayObject );
+			parseMovieClip( _movieclip, _rootObject, _displayObject );
 			loaded();
 		}
 		
-		private function parseMovieClip( mc : MovieClip, parent : DisplayObjectContainer ) : void {
+		private function parseMovieClip( mc : MovieClip, root : DisplayObjectContainer, container:DisplayObjectContainer ) : void {
 			var child : BFObject;
 			var n : int = mc.numChildren;
 			
@@ -117,7 +121,7 @@ package com.benoitfreslon.layoutmanager {
 						obj.rotation = child.rotation;
 						obj.visible = child.isVisible;
 						
-						parent.addChild( obj );
+						container.addChild( obj );
 						
 						if ( obj.hasOwnProperty( "tag" ) ) {
 							obj[ "tag" ] = child.tag;
@@ -125,10 +129,10 @@ package com.benoitfreslon.layoutmanager {
 						if ( obj.hasOwnProperty( "userData" ) ) {
 							obj[ "userData" ] = child.userData;
 						}
-						if ( _displayObject.hasOwnProperty( child.name ) ) {
-							_displayObject[ child.name ] = obj as objectClass;
+						if ( _rootObject.hasOwnProperty( child.name ) ) {
+							_rootObject[ child.name ] = obj as objectClass;
 						} else if ( child.name.split( "__id" ).length == 1 ) {
-							trace( new Error( "No public property '" + child.name + "' declared in " + _displayObject ) );
+							trace( new Error( "No public property '" + child.name + "' declared in " + _rootObject ) );
 						}
 					} else {
 						
@@ -142,11 +146,13 @@ package com.benoitfreslon.layoutmanager {
 			_assetManager = null;
 			_displayObject = null;
 			_movieclip = null;
+			_rootObject = null;
 			onLoad();
 		}
 		
 		private function addImage( objectClass : Class, child : BFImage ) : Image {
-			var img : Image = new objectClass( getTexture( child, child.texture, child.width, child.height ) ) as Image;
+			var tex:Texture = getTexture( child, child.texture, child.width, child.height )
+			var img : Image = new objectClass( tex ) as Image;
 			img.pivotX = int(img.width / 2);
 			img.pivotY = int(img.height / 2);
 			return img;
@@ -154,7 +160,7 @@ package com.benoitfreslon.layoutmanager {
 		
 		private function addSprite( objectClass : Class, child : BFSprite ) : Sprite {
 			var s : Sprite = new objectClass() as Sprite;
-			parseMovieClip( child as MovieClip, s as DisplayObjectContainer );
+			parseMovieClip( child as MovieClip, s as DisplayObjectContainer, s as DisplayObjectContainer );
 			return s;
 		}
 		
@@ -182,15 +188,21 @@ package com.benoitfreslon.layoutmanager {
 			bt.fontName = child.fontName;
 			bt.fontSize = child.fontSize;
 			bt.alphaWhenDisabled = child.alphaWhenDisabled;
+			bt.scaleWhenDown = child.scaleWhenDown;
 			bt.text = child.text;
 			bt.pivotX = int(bt.width / 2);
 			bt.pivotY = int(bt.height / 2);
+			
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
-			if ( bt.hasOwnProperty( "onTouch" ) && _displayObject.hasOwnProperty( child.onTouch ) ) {
-				bt[ "onTouch" ] = _displayObject[ child.onTouch ];
-			} else if ( bt.hasOwnProperty( "onTouch" ) && child.onTouch != "" && !_displayObject.hasOwnProperty( child.onTouch ) ) {
-				trace( new Error( "The public method '" + child.onTouch + "' is not defined in " + _displayObject ) );
+				
+			if (bt.hasOwnProperty( "overState" ) && child.overState )
+				bt["overState"] = _assetManager.getTexture( child.overState );
+				
+			if ( bt.hasOwnProperty( "onTouch" ) && _rootObject.hasOwnProperty( child.onTouch ) ) {
+				bt[ "onTouch" ] = _rootObject[ child.onTouch ];
+			} else if ( bt.hasOwnProperty( "onTouch" ) && child.onTouch != "" && !_rootObject.hasOwnProperty( child.onTouch ) ) {
+				trace( new Error( "The public method '" + child.onTouch + "' is not defined in " + _rootObject ) );
 			}
 			return bt;
 		}
@@ -200,7 +212,12 @@ package com.benoitfreslon.layoutmanager {
 				trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
 				return Texture.empty( w, h );
 			} else {
-				return _assetManager.getTexture( textureName );
+				var tex:Texture = _assetManager.getTexture( textureName );
+				if (tex == null) {
+					trace( new Error( "Texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+" doesn't exist. Default texture used." ) );
+					return Texture.empty( w, h );
+				}
+				return tex;
 			}
 		}
 	}

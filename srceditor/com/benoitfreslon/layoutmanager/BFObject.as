@@ -37,8 +37,12 @@ package com.benoitfreslon.layoutmanager
 		
 		public var mainClass:String = "";
 		public var params:Object = { };
+		private const ARR:Array = [BFButton, BFImage, BFObject, BFTextField];
 		public function BFObject() 
 		{
+			
+			
+			
 			super();
 		}
 		public function setSize(w:Number, h:Number):void {
