@@ -14,6 +14,8 @@
 	import starling.utils.AssetManager;
 	import starling.display.ButtonExtended;
 	
+	// TODO PivotX PivotY
+	
 	/**
 	 * Loader of Layout
 	 * @version 1.03
@@ -131,7 +133,7 @@
 						}
 						if ( _rootObject.hasOwnProperty( child.name ) ) {
 							_rootObject[ child.name ] = obj as objectClass;
-						} else if ( child.name.split( "__id" ).length == 1 ) {
+						} else if ( child.name.split( "__id" ).length == 1  && child.name.split( "instance" ).length == 1) {
 							trace( new Error( "No public property '" + child.name + "' declared in " + _rootObject ) );
 						}
 					} else {
@@ -181,10 +183,11 @@
 			return t;
 		}
 		
+		// TODO Parse BFButton and addChild objects inside Button
 		private function addButton( objectClass : Class, child : BFButton ) : Button {
 			var bt : Button = new objectClass( getTexture( child, child.upState, child.width, child.height ) ) as Button;
-			bt.fontBold = child.fontBold;
-			bt.fontColor = child.fontColor;
+			bt.fontBold = child.bold;
+			bt.fontColor = child.color;
 			bt.fontName = child.fontName;
 			bt.fontSize = child.fontSize;
 			bt.alphaWhenDisabled = child.alphaWhenDisabled;
@@ -209,12 +212,12 @@
 		
 		private function getTexture( child : BFObject, textureName : String, w : Number, h : Number ) : Texture {
 			if ( textureName == "" ) {
-				trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
+				//trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
 				return Texture.empty( w, h );
 			} else {
 				var tex:Texture = _assetManager.getTexture( textureName );
 				if (tex == null) {
-					trace( new Error( "Texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+" doesn't exist. Default texture used." ) );
+					trace( new Error( "Texture '"+textureName+"' defined in '" + child + " - name: "+child.name+"' in "+_displayObject+" doesn't exist. Default texture used." ) );
 					return Texture.empty( w, h );
 				}
 				return tex;

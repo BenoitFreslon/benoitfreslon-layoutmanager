@@ -59,6 +59,7 @@
 		}
 		
 		protected function handleTouch( te : TouchEvent ) : void {
+			if (!enabled) return;
 			if ( te.getTouch( this, TouchPhase.HOVER ) ) {
 				if ( !isRollOver ) {
 					rollOver();
@@ -72,14 +73,14 @@
 			}
 		}
 		
-		protected function rollOver() : void {
+		public function rollOver() : void {
 			onRollOver();
 			if ( overState ) {
 				super.upState = overState;
 			}
 		}
 		
-		protected function rollOut() : void {
+		public function rollOut() : void {
 			onRollOut()
 			super.upState = _upStateTemp;
 		}
@@ -90,8 +91,9 @@
 		}
 		
 		protected function triggered( e : Event ) : void {
-			onTouch( e );
 			onRollOut();
+			onTouch( e );
+			
 		}
 		
 		protected function removed( e : Event ) : void {
