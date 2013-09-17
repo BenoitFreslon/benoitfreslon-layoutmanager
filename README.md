@@ -19,11 +19,8 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 ### TODO
 * Use the scale property from MovieClip.
 * Use relative and absolute coordinates for HD format.
-* Use Flash native components.
 * Build AIR Application.
 * Display assets in the layout editor.
-
-Flash Components
 
 ### Default values
 
@@ -130,7 +127,7 @@ Import the LayoutLaoder:
 import com.benoitfreslon.layoutmanager.LayoutLoader;
 ```
 
-Add all your assets in your ***AssetManager*** instance like this :
+Add all your assets in your **AssetManager** instance like this :
 ```
 var assets:AssetManager = new AssetManager();
 ```
