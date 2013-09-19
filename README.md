@@ -12,7 +12,7 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 * Use the basic class of Starling of use your own classes.
 * Use natives properties of Starling classes (texture, text, color, font, etc.).
 * Use instance name in Flash IDE and get objects in your class.
-* Add customs parameters in your own visual objects.
+* Add custom parameters in your own visual objects.
 * Use the Sprite container to embed several objects in one visual object.
 * Just build one lightweight .SWC file with all your layouts.
 
