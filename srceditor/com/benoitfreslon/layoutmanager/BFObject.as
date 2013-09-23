@@ -1,58 +1,1 @@
-package com.benoitfreslon.layoutmanager
-{
-	import flash.display.MovieClip;
-	
-	/**
-	 * ...
-	 * @author Benoît Freslon
-	 */
-	public class BFObject extends MovieClip 
-	{
-		//protected var _width:Number;
-		//protected var _height:Number;
-		
-		[Inspectable(name = "tag",type = "Number")]
-		public var tag:Number = 0;
-		
-		[Inspectable(name = "userData", type="String")]
-		public var userData:String = "";
-		
-		[Inspectable(name = "className",type = "String")]
-		public var className:String = "";
-		
-		[Inspectable(name = "visible",type = "Boolean", defaultValue="true")]
-		public var isVisible:Boolean = true;
-		
-		[Inspectable(name = "position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]
-		public var position:String;
-		
-		[Inspectable(name = "touchable", type = "Boolean", defaultValue = "true")]
-		public var touchable:Boolean = true;
-		
-		[Inspectable(name = "flipX", type = "Boolean", defaultValue = "false")]
-		public var flipX:Boolean = false;
-		
-		[Inspectable(name = "flipY", type = "Boolean", defaultValue = "false")]
-		public var flipY:Boolean = false;
-		
-		public var mainClass:String = "";
-		public var params:Object = { };
-		private const ARR:Array = [BFButton, BFImage, BFObject, BFTextField];
-		public function BFObject() 
-		{
-			
-			
-			
-			super();
-		}
-		public function setSize(w:Number, h:Number):void {
-			//_width = w;
-			//_height = h;
-			draw();
-		}
-		protected function draw():void {
-			//super.draw();
-		}
-	}
-
-}
+﻿package com.benoitfreslon.layoutmanager{	import flash.display.MovieClip;	import flash.display.Shape;	/**	 * ...	 * @author Benoît Freslon	 */	public class BFObject extends MovieClip 	{		//protected var _width:Number;		//protected var _height:Number;				[Inspectable(name = "tag",type = "Number")]		public var tag:Number = 0;				[Inspectable(name = "userData", type="String")]		public var userData:String = "";				[Inspectable(name = "className",type = "String")]		public var className:String = "";				[Inspectable(name = "visible",type = "Boolean", defaultValue="true")]		public var isVisible:Boolean = true;				[Inspectable(name = "position", type = "List", defaultValue = "Relative", enumeration = "Relative, Absolute")]		public var position:String;				[Inspectable(name = "touchable", type = "Boolean", defaultValue = "true")]		public var touchable:Boolean = true;				[Inspectable(name = "flipX", type = "Boolean", defaultValue = "false")]		public var flipX:Boolean = false;				[Inspectable(name = "flipY", type = "Boolean", defaultValue = "false")]		public var flipY:Boolean = false;				[Inspectable(name = "pivotX",type = "Number", defaultValue = "0.5")]		public function set pivotX(value:Number):void {			_pivotX = value;			draw();		}		public function get pivotX():Number {			return _pivotX;		}		private var _pivotX:Number = 0.5;				[Inspectable(name = "pivotY",type = "Number", defaultValue = "0.5")]		public function set pivotY(value:Number):void {			_pivotY = value;			draw();		}		public function get pivotY():Number {			return _pivotY;		}		private var _pivotY:Number = 0.5;				public var mainClass:String = "";		public var params:Object = { };		private const ARR:Array = [BFButton, BFImage, BFObject, BFTextField];						private var pivot:Shape = new Shape ();		public function BFObject() 		{												super();						pivot.graphics.beginFill(0xFFFF00);			pivot.graphics.lineStyle(2,0XFF0000);			pivot.graphics.drawCircle(0,0,5);			addChild(pivot);						draw();		}		public function setSize(w:Number, h:Number):void {			//_width = w;			//_height = h;			draw();		}		protected function draw():void {			//super.draw();			trace(pivotX, pivotY);			pivot.x = width * (pivotX - 0.5);			pivot.y = height * (pivotY - 0.5);					}	}}

@@ -155,8 +155,8 @@
 		private function addImage( objectClass : Class, child : BFImage ) : Image {
 			var tex:Texture = getTexture( child, child.texture, child.width, child.height )
 			var img : Image = new objectClass( tex ) as Image;
-			img.pivotX = int(img.width / 2);
-			img.pivotY = int(img.height / 2);
+			img.pivotX = int(img.width  * child.pivotX);
+			img.pivotY = int(img.height * child.pivotY);
 			return img;
 		}
 		
@@ -178,8 +178,8 @@
 			t.italic = child.italic;
 			t.border = child.border;
 			t.underline = child.underline;
-			t.pivotX = int(t.width / 2);
-			t.pivotY = int(t.height / 2);
+			t.pivotX = int(img.width  * child.pivotX);
+			t.pivotY = int(img.height * child.pivotY);
 			return t;
 		}
 		
@@ -193,8 +193,8 @@
 			bt.alphaWhenDisabled = child.alphaWhenDisabled;
 			bt.scaleWhenDown = child.scaleWhenDown;
 			bt.text = child.text;
-			bt.pivotX = int(bt.width / 2);
-			bt.pivotY = int(bt.height / 2);
+			bt.pivotX = int(img.width  * child.pivotX);
+			bt.pivotY = int(img.height * child.pivotY);
 			
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
