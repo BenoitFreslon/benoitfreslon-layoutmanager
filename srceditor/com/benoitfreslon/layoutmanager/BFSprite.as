@@ -7,7 +7,6 @@ package com.benoitfreslon.layoutmanager {
 	dynamic public class BFSprite extends BFObject {
 		
 		public function BFSprite() {
-			trace("BFSprite");
 			super();
 			mainClass = "starling.display.Sprite";
 		}
