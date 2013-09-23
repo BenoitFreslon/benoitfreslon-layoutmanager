@@ -14,11 +14,9 @@
 	import starling.utils.AssetManager;
 	import starling.display.ButtonExtended;
 	
-	// TODO PivotX PivotY
-	
 	/**
 	 * Loader of Layout
-	 * @version 1.03
+	 * @version 1.04
 	 * @author Benoît Freslon
 	 */
 	public class LayoutLoader {
@@ -72,11 +70,10 @@
 		private function parseMovieClip( mc : MovieClip, root : DisplayObjectContainer, container:DisplayObjectContainer ) : void {
 			var child : BFObject;
 			var n : int = mc.numChildren;
-			
 			for ( var i : uint = 0; i < n; ++i ) {
 				child = mc.getChildAt( i ) as BFObject;
-				
 				if ( child ) {
+					
 					if ( child.mainClass ) {
 						
 						var a : Array = [ ButtonExtended ];
@@ -95,7 +92,7 @@
 							obj = addButton( objectClass, child as BFButton );
 						} else if ( child.mainClass == "starling.text.TextField" ) {
 							obj = addTextField( objectClass, child as BFTextField );
-						} else if ( child.mainClass == "starling.display.Sprite" ) {
+						} else if ( child.mainClass == "starling.display.Sprite") {
 							obj = addSprite( objectClass, child as BFSprite );
 						} else {
 							trace( new Error( "No mainClass defined in '" + child + "'" ) );
@@ -178,8 +175,8 @@
 			t.italic = child.italic;
 			t.border = child.border;
 			t.underline = child.underline;
-			t.pivotX = int(img.width  * child.pivotX);
-			t.pivotY = int(img.height * child.pivotY);
+			t.pivotX = int(t.width  * child.pivotX);
+			t.pivotY = int(t.height * child.pivotY);
 			return t;
 		}
 		
@@ -193,8 +190,8 @@
 			bt.alphaWhenDisabled = child.alphaWhenDisabled;
 			bt.scaleWhenDown = child.scaleWhenDown;
 			bt.text = child.text;
-			bt.pivotX = int(img.width  * child.pivotX);
-			bt.pivotY = int(img.height * child.pivotY);
+			bt.pivotX = int(bt.width  * child.pivotX);
+			bt.pivotY = int(bt.height * child.pivotY);
 			
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );

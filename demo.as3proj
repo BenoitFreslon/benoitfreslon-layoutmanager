@@ -17,6 +17,7 @@
   <classpaths>
     <class path="src" />
     <class path="demo\src" />
+    <class path="srceditor" />
   </classpaths>
   <!-- Build options -->
   <build>

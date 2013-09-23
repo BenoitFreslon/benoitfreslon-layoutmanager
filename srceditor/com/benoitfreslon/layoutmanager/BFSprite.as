@@ -4,9 +4,10 @@ package com.benoitfreslon.layoutmanager {
 	 * ...
 	 * @author Benoît Freslon
 	 */
-	public class BFSprite extends BFObject {
+	dynamic public class BFSprite extends BFObject {
 		
 		public function BFSprite() {
+			trace("BFSprite");
 			super();
 			mainClass = "starling.display.Sprite";
 		}
