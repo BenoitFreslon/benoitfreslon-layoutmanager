@@ -165,6 +165,7 @@
 		
 		private function addTextField( objectClass : Class, child : BFTextField ) : TextField {
 			var t : TextField = new objectClass( child.width, child.height, "" ) as TextField;
+			t.autoSize = child.autoSize;
 			t.fontName = child.fontName;
 			t.fontSize = child.fontSize;
 			t.text = child.text;
