@@ -2,6 +2,7 @@
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
 	import starling.display.Button;
 	import starling.display.DisplayObject;
@@ -24,7 +25,7 @@
 		private var _displayObject : DisplayObjectContainer;
 		private var _rootObject:DisplayObjectContainer;
 		private var _assetManager : AssetManager;
-		//static public var debug : Boolean = false;
+		static public var debug : Boolean = false;
 		private var onLoad : Function = function() : void {
 		
 		};
@@ -33,6 +34,7 @@
 		 */
 		public function LayoutLoader() {
 			super();
+			debug = Capabilities.isDebugger
 		}
 		/**
 		 * Load a layout from a MovieClip added in ActionScript.
@@ -44,6 +46,10 @@
 		 * @param	callBack The callback function when the layout is loaded and displayed.
 		 */
 		public function loadLayout( rootObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			
+			if (debug)
+				trace("LayoutLoader: loadLayout", rootObject, LayoutClass, assetManager, callBack);
+			
 			_rootObject = rootObject;
 			_displayObject = rootObject;
 			_assetManager = assetManager;
@@ -53,6 +59,9 @@
 				onLoad = callBack
 		}
 		public function loadLayoutIn(rootObject:DisplayObjectContainer, displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			if (debug)
+				trace("LayoutLoader: loadLayoutIn", rootObject, displayObject, LayoutClass, assetManager, callBack);
+			
 			_rootObject = rootObject
 			_displayObject = displayObject;
 			_assetManager = assetManager;
@@ -62,6 +71,10 @@
 				onLoad = callBack
 		}
 		private function layoutLoaded( e : Event ) : void {
+			
+			if (debug)
+				trace("LayoutLoader: layoutLoaded");
+			
 			_movieclip.removeEventListener( Event.ENTER_FRAME, layoutLoaded );
 			parseMovieClip( _movieclip, _rootObject, _displayObject );
 			loaded();
@@ -168,7 +181,6 @@
 			t.autoSize = child.autoSize;
 			t.fontName = child.fontName;
 			t.fontSize = child.fontSize;
-			t.text = child.text;
 			t.color = child.color;
 			t.hAlign = child.hAlign;
 			t.vAlign = child.vAlign;
@@ -178,6 +190,14 @@
 			t.underline = child.underline;
 			t.pivotX = int(t.width  * child.pivotX);
 			t.pivotY = int(t.height * child.pivotY);
+			var text:String = child.text;
+			text = text.replace("\\r", "\r");
+			text = text.replace("\\n", "\n");
+			text = text.replace("\\t", "\t");
+			t.text = text;
+			trace(child.width);
+			t.width = child.width;
+			t.height = child.height;
 			return t;
 		}
 		

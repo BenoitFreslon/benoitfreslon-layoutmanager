@@ -8,11 +8,13 @@
 	 */
 	public class BFTextField extends BFObject {
 		
-		private var _autoSize:String = "none";
-		[Inspectable( name="autoSize",type="List",defaultValue="none", enumeration = "bothDirections, horizontal, none, vertical" )]
+		private var _autoSize : String = "none";
+		
+		[Inspectable( name="autoSize",type="List",defaultValue="none",enumeration="bothDirections, horizontal, none, vertical" )]
 		public function get autoSize() : String {
 			return _autoSize;
 		}
+		
 		public function set autoSize( value : String ) : void {
 			_autoSize = value;
 			draw();
@@ -135,48 +137,49 @@
 		}
 		private var _vAlign : String = "center";
 		
-		private var _tf : TextField = new TextField();;
+		private var _tf : TextField = new TextField();
+		;
 		
 		public function BFTextField() {
 			super();
 			mainClass = "starling.text.TextField";
 			
-			addChild( _tf );
+			//addChild( _tf );
 			_tf.multiline = true;
 		
 		}
 		
 		protected override function draw() : void {
 			super.draw();
-			/*
-			_text = _text.replace( "\\n", "<br />" );
-			
-			_tf.textColor = _color;
-			_tf.border = _border;
-			
-			var htmlItalic : String = "";
-			if ( _italic )
-				htmlItalic = "<i>";
-			var htmlBold : String = "";
-			if ( _bold )
-				htmlBold = "<b>";
-			var htmlUnderline : String = "";
-			if ( _underline )
-				htmlUnderline = "<u>";
-			
-			_tf.htmlText = "<p align='" + _hAlign + "'>" + htmlBold + htmlItalic + htmlUnderline + "<font face='" + _fontName + "' size='" + _fontSize + "' color='" + _color + "' >" + _text;
-			
-			_tf.width = scaleX * 100;
-			_tf.height = scaleY * 100;
-			
-			if ( _vAlign ) {
-				_tf.autoSize = TextFieldAutoSize.CENTER;
-			} else {
-				_tf.autoSize = TextFieldAutoSize.NONE;
-			}
-			_tf.x = -_tf.width / 2;
-			_tf.y = -_tf.height / 2;
-			*/
+		/*
+		   _text = _text.replace( "\\n", "<br />" );
+		
+		   _tf.textColor = _color;
+		   _tf.border = _border;
+		
+		   var htmlItalic : String = "";
+		   if ( _italic )
+		   htmlItalic = "<i>";
+		   var htmlBold : String = "";
+		   if ( _bold )
+		   htmlBold = "<b>";
+		   var htmlUnderline : String = "";
+		   if ( _underline )
+		   htmlUnderline = "<u>";
+		
+		   _tf.htmlText = "<p align='" + _hAlign + "'>" + htmlBold + htmlItalic + htmlUnderline + "<font face='" + _fontName + "' size='" + _fontSize + "' color='" + _color + "' >" + _text;
+		
+		   _tf.width = scaleX * 100;
+		   _tf.height = scaleY * 100;
+		
+		   if ( _vAlign ) {
+		   _tf.autoSize = TextFieldAutoSize.CENTER;
+		   } else {
+		   _tf.autoSize = TextFieldAutoSize.NONE;
+		   }
+		   _tf.x = -_tf.width / 2;
+		   _tf.y = -_tf.height / 2;
+		 */
 		}
 	}
 
