@@ -195,7 +195,6 @@
 			text = text.replace("\\n", "\n");
 			text = text.replace("\\t", "\t");
 			t.text = text;
-			trace(child.width);
 			t.width = child.width;
 			t.height = child.height;
 			return t;
