@@ -38,7 +38,7 @@
 		protected var isRollOver : Boolean = false;
 		
 		public var onTouch : Function = function( e : Event ) : void {
-			trace(new Error("ButtonExtented: The 'onTouch' method is not defined in " + this.name + ".") );
+			throw new Error("ButtonExtented: The 'onTouch' method is not defined in " + this.name + ".") ;
 		};
 		public var onRollOver : Function = function() : void {
 		
