@@ -4,7 +4,9 @@
 	import flash.events.Event;
 	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
+	
 	import starling.display.Button;
+	import starling.display.ButtonExtended;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
@@ -13,7 +15,6 @@
 	import starling.text.TextField;
 	import starling.textures.Texture;
 	import starling.utils.AssetManager;
-	import starling.display.ButtonExtended;
 	
 	/**
 	 * Loader of Layout
@@ -96,6 +97,7 @@
 						var a : Array = [ ButtonExtended ];
 						
 						var objectClass : Class;
+						if (debug) trace(child.className);
 						if ( child.className ) {
 							objectClass = getDefinitionByName( child.className ) as Class;
 						} else {
