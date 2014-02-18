@@ -97,7 +97,7 @@
 						var a : Array = [ ButtonExtended ];
 						
 						var objectClass : Class;
-						if (debug) trace(child.className);
+						if (debug) trace("LayoutLoader: child.className",child.className);
 						if ( child.className ) {
 							objectClass = getDefinitionByName( child.className ) as Class;
 						} else {
