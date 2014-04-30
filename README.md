@@ -9,12 +9,12 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 * Use Flash IDE to build visual layouts.
 * Build your layouts with native Starling objects (Sprite, Image, TextField, Button).
 * Use the custom Flash components and use the LayoutLoader class to display the layout in real time in your game.
-* Use the basic class of Starling of use your own classes.
-* Use natives properties of Starling classes (texture, text, color, font, etc.).
+* Use the basic class of Starling or use your own classes.
+* Use native properties of Starling classes (texture, text, color, font, etc.).
 * Use instance name in Flash IDE and get objects in your class.
 * Add custom parameters in your own visual objects.
 * Use the Sprite container to embed several objects in one visual object.
-* Just build one lightweight .SWC file with all your layouts.
+* Just build one lightweight .SWC file with Flash IDE with all your layouts.
 
 ### TODO
 * Use the scale property from MovieClip.
