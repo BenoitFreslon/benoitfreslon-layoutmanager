@@ -77,8 +77,7 @@
 		}
 		private var _fontSize : Number = 12;
 		
-		[Inspectable( name="hAlign",type="String",defaultValue="center" )]
-		
+		[Inspectable( name="hAlign",type="List",defaultValue="left",enumeration="center, left, right" )]
 		public function get hAlign() : String {
 			return _hAlign;
 		}
@@ -86,7 +85,17 @@
 		public function set hAlign( value : String ) : void {
 			_hAlign = value;
 		}
-		private var _hAlign : String = "center";
+		private var _hAlign : String = "left";
+		
+		[Inspectable( name="vAlign",type="List",defaultValue="t",enumeration="center, bottom, top" )]
+		public function get vAlign() : String {
+			return _vAlign;
+		}
+		
+		public function set vAlign( value : String ) : void {
+			_vAlign = value;
+		}
+		private var _vAlign : String = "top";
 		
 		[Inspectable( name="text",variable="text",type="String" )]
 		public function set text( t : String ) : void {
@@ -101,7 +110,6 @@
 		private var _text : String = "";
 		
 		[Inspectable( name="italic",type="Boolean",defaultValue="false" )]
-		
 		public function get italic() : Boolean {
 			return _italic;
 		}
@@ -113,7 +121,6 @@
 		private var _italic : Boolean = false;
 		
 		[Inspectable( name="underline",type="Boolean",defaultValue="false" )]
-		
 		public function get underline() : Boolean {
 			return _underline;
 		}
@@ -125,20 +132,7 @@
 		// TODO vertiacal align
 		private var _underline : Boolean = false;
 		
-		[Inspectable( name="vAlign",type="String",defaultValue="center" )]
-		
-		public function get vAlign() : String {
-			return _vAlign;
-		}
-		
-		public function set vAlign( value : String ) : void {
-			_vAlign = value;
-		
-		}
-		private var _vAlign : String = "center";
-		
 		private var _tf : TextField = new TextField();
-		;
 		
 		public function BFTextField() {
 			super();
@@ -146,7 +140,6 @@
 			
 			//addChild( _tf );
 			_tf.multiline = true;
-		
 		}
 		
 		protected override function draw() : void {
