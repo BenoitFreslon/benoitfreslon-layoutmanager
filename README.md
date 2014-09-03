@@ -69,6 +69,7 @@ Set the texture name in the component parameter to load the Image with a texture
 
 Parameters:
 * texture
+* smooting
 
 #### **BFButton** - startling.display.ButtonExtented
 
@@ -98,7 +99,7 @@ Parameters:
 ## INSTALLATION
 
 * Create an ActionScript 3.0 project
-* Add the [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework or the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework in your project
+* Add the [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework or the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework with the **Starling** library in your project
 * Add the **benoitfreslon-layoutmanager/src** and the **benoitfreslon-layoutmanager/srceditor** in the source path of your ActionScript 3.0 project
 * Copy the **sample.fla** file from the **benoitfreslon-layoutmanager/sample** folder in your own folder
 * Open the **sample.fla** file with Flash IDE and set the source path to the src folder: **benoitfreslon-layoutmanager/srceditor**
@@ -124,25 +125,32 @@ Parameters:
 
 In your code source ;
 
-Import the LayoutLaoder:
+* Create a **starling.display.Sprite** class or a **citrus.core.starling.StarlingState**
+* Import the **LayoutLaoder** class in your class:
+
 ```
 import com.benoitfreslon.layoutmanager.LayoutLoader;
 ```
 
-Add all your assets in your **AssetManager** instance like this :
+* Add all your assets in your **AssetManager** instance like this :
+
+```
+import starling.utils.AssetManager;
+```
+
+and
+
 ```
 var assets:AssetManager = new AssetManager();
 ```
 
-Create an instance of the LayoutLoader class to load a layout.
-Then define the callBack method (onLoad) in your class.
+* Create an instance of the **LayoutLoader** class to load a layout.
+* (Optional) Define the callBack method `onLoad` in your class.
+
 ```
 var ll:LayoutLoader = new LayoutLoader();
 ll.loadLayout(this, MainMenuLayout, assets, onLoad);
 ```
-
-
-
 
 #### Source code example
 

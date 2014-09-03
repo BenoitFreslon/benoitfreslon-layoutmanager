@@ -11,7 +11,7 @@ package com.benoitfreslon.layoutmanager {
 		public var texture : String = "";
 		
 		[Inspectable( name="smoothing",type="List",defaultValue="bilinear",enumeration="none,bilinear,trilinear" )]
-		public var smoothing:String = "bilinear";
+		public var smoothing : String = "bilinear";
 		
 		public function BFImage() {
 			super();

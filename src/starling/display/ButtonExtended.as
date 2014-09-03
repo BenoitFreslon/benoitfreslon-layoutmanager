@@ -21,11 +21,11 @@
 		protected var _upState : Texture;
 		protected var _upStateTemp : Texture;
 		
-		public function get overState() : Texture {
+		public override function get overState() : Texture {
 			return _overState;
 		}
 		
-		public function set overState( value : Texture ) : void {
+		public override function set overState( value : Texture ) : void {
 			_overState = value;
 		}
 		protected var _overState : Texture;
