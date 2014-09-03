@@ -118,7 +118,7 @@ Parameters:
 * Add instances of BFImage, BFButton, BFTextField, etc.
 * Set an **instance name** if you want and set the ***onTouch*** method if you want in the BFButton instance
 * Move or rotate objects
-* Customise the components in the **Component parameters** panel
+* Customize the components in the **Component parameters** panel
 * When it's done compile the swc
 
 ### Source example
