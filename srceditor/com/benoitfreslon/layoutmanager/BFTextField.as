@@ -8,7 +8,38 @@
 	 */
 	public class BFTextField extends BFObject {
 		
-		private var _autoSize : String = "none";
+		[Inspectable( name="autoScale",type="Boolean",defaultValue="false" )]
+		public function get autoScale() : Boolean {
+			return _autoScale;
+		}
+		
+		public function set autoScale( value : Boolean ) : void {
+			_autoScale = value;
+			draw();
+		}
+		private var _autoScale
+		
+		[Inspectable( name="batchable",type="Boolean",defaultValue="false" )]
+		public function get batchable() : Boolean {
+			return _batchable;
+		}
+		
+		public function set batchable( value : Boolean ) : void {
+			_batchable = value;
+			draw();
+		}
+		private var _batchable
+		
+		[Inspectable( name="kerning",type="Boolean",defaultValue="true" )]
+		public function get kerning() : Boolean {
+			return _kerning;
+		}
+		
+		public function set kerning( value : Boolean ) : void {
+			_kerning = value;
+			draw();
+		}
+		private var _kerning
 		
 		[Inspectable( name="autoSize",type="List",defaultValue="none",enumeration="bothDirections, horizontal, none, vertical" )]
 		public function get autoSize() : String {
@@ -19,6 +50,7 @@
 			_autoSize = value;
 			draw();
 		}
+		private var _autoSize : String = "none";
 		
 		[Inspectable( name="bold",type="Boolean",defaultValue="false" )]
 		public function get bold() : Boolean {
@@ -77,7 +109,7 @@
 		}
 		private var _fontSize : Number = 12;
 		
-		[Inspectable( name="hAlign",type="List",defaultValue="left",enumeration="center, left, right" )]
+		[Inspectable( name="hAlign",type="List",defaultValue="left",enumeration="center,left,right" )]
 		public function get hAlign() : String {
 			return _hAlign;
 		}
@@ -87,7 +119,7 @@
 		}
 		private var _hAlign : String = "left";
 		
-		[Inspectable( name="vAlign",type="List",defaultValue="t",enumeration="center, bottom, top" )]
+		[Inspectable( name="vAlign",type="List",defaultValue="top",enumeration="center,bottom,top" )]
 		public function get vAlign() : String {
 			return _vAlign;
 		}

@@ -48,29 +48,29 @@
 		 * @param	assetManager The AssetManager instance where all assets are loaded.
 		 * @param	callBack The callback function when the layout is loaded and displayed.
 		 */
-		public function loadLayout( rootObject : DisplayObjectContainer , LayoutClass : Class , assetManager : AssetManager , callBack : Function = null ) : void {
+		public function loadLayout( rootObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
 			
 			if ( debug )
-				trace( "LayoutLoader: loadLayout" , rootObject , LayoutClass , assetManager , callBack );
+				trace( "LayoutLoader: loadLayout", rootObject, LayoutClass, assetManager, callBack );
 			
 			_rootObject = rootObject;
 			_displayObject = rootObject;
 			_assetManager = assetManager;
 			_movieclip = new LayoutClass();
-			_movieclip.addEventListener( Event.ENTER_FRAME , layoutLoaded );
+			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
 			if ( onLoad != null )
 				onLoad = callBack
 		}
 		
-		public function loadLayoutIn( rootObject : DisplayObjectContainer , displayObject : DisplayObjectContainer , LayoutClass : Class , assetManager : AssetManager , callBack : Function = null ) : void {
+		public function loadLayoutIn( rootObject : DisplayObjectContainer, displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
 			if ( debug )
-				trace( "LayoutLoader: loadLayoutIn" , rootObject , displayObject , LayoutClass , assetManager , callBack );
+				trace( "LayoutLoader: loadLayoutIn", rootObject, displayObject, LayoutClass, assetManager, callBack );
 			
 			_rootObject = rootObject
 			_displayObject = displayObject;
 			_assetManager = assetManager;
 			_movieclip = new LayoutClass();
-			_movieclip.addEventListener( Event.ENTER_FRAME , layoutLoaded );
+			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
 			if ( onLoad != null )
 				onLoad = callBack
 		}
@@ -80,15 +80,15 @@
 			if ( debug )
 				trace( "LayoutLoader: layoutLoaded" );
 			
-			_movieclip.removeEventListener( Event.ENTER_FRAME , layoutLoaded );
-			parseMovieClip( _movieclip , _rootObject , _displayObject );
+			_movieclip.removeEventListener( Event.ENTER_FRAME, layoutLoaded );
+			parseMovieClip( _movieclip, _rootObject, _displayObject );
 			loaded();
 		}
 		
-		private function parseMovieClip( mc : MovieClip , root : DisplayObjectContainer , container : DisplayObjectContainer ) : void {
+		private function parseMovieClip( mc : MovieClip, root : DisplayObjectContainer, container : DisplayObjectContainer ) : void {
 			var child : BFObject;
 			var n : int = mc.numChildren;
-			for ( var i : uint = 0 ; i < n ; ++i ) {
+			for ( var i : uint = 0; i < n; ++i ) {
 				child = mc.getChildAt( i ) as BFObject;
 				if ( child ) {
 					
@@ -97,7 +97,8 @@
 						var a : Array = [ ButtonExtended ];
 						
 						var objectClass : Class;
-						if (debug) trace("LayoutLoader: child.className",child.className);
+						if ( debug )
+							trace( "LayoutLoader: child.className", child.className );
 						if ( child.className ) {
 							objectClass = getDefinitionByName( child.className ) as Class;
 						} else {
@@ -106,13 +107,13 @@
 						
 						var obj : DisplayObject;
 						if ( child.mainClass == "starling.display.Image" ) {
-							obj = addImage( objectClass , child as BFImage );
+							obj = addImage( objectClass, child as BFImage );
 						} else if ( child.mainClass == "starling.display.ButtonExtended" ) {
-							obj = addButton( objectClass , child as BFButton );
+							obj = addButton( objectClass, child as BFButton );
 						} else if ( child.mainClass == "starling.text.TextField" ) {
-							obj = addTextField( objectClass , child as BFTextField );
+							obj = addTextField( objectClass, child as BFTextField );
 						} else if ( child.mainClass == "starling.display.Sprite" ) {
-							obj = addSprite( objectClass , child as BFSprite );
+							obj = addSprite( objectClass, child as BFSprite );
 						} else {
 							throw new Error( "No mainClass defined in '" + child + "'" );
 						}
@@ -168,22 +169,25 @@
 			onLoad();
 		}
 		
-		private function addImage( objectClass : Class , child : BFImage ) : Image {
-			var tex : Texture = getTexture( child , child.texture , child.width , child.height )
+		private function addImage( objectClass : Class, child : BFImage ) : Image {
+			var tex : Texture = getTexture( child, child.texture, child.width, child.height )
 			var img : Image = new objectClass( tex ) as Image;
 			img.pivotX = int( img.width * child.pivotX );
 			img.pivotY = int( img.height * child.pivotY );
 			return img;
 		}
 		
-		private function addSprite( objectClass : Class , child : BFSprite ) : Sprite {
+		private function addSprite( objectClass : Class, child : BFSprite ) : Sprite {
 			var s : Sprite = new objectClass() as Sprite;
-			parseMovieClip( child as MovieClip , s as DisplayObjectContainer , s as DisplayObjectContainer );
+			parseMovieClip( child as MovieClip, s as DisplayObjectContainer, s as DisplayObjectContainer );
 			return s;
 		}
 		
-		private function addTextField( objectClass : Class , child : BFTextField ) : TextField {
-			var t : TextField = new objectClass( child.width , child.height , "" ) as TextField;
+		private function addTextField( objectClass : Class, child : BFTextField ) : TextField {
+			var t : TextField = new objectClass( child.width, child.height, "" ) as TextField;
+			t.kerning = child.kerning;
+			t.batchable = child.batchable;
+			t.autoScale = child.autoScale;
 			t.autoSize = child.autoSize;
 			t.fontName = child.fontName;
 			t.fontSize = child.fontSize;
@@ -197,9 +201,9 @@
 			t.pivotX = int( t.width * child.pivotX );
 			t.pivotY = int( t.height * child.pivotY );
 			var text : String = child.text;
-			text = text.replace( "\\r" , "\r" );
-			text = text.replace( "\\n" , "\n" );
-			text = text.replace( "\\t" , "\t" );
+			text = text.replace( "\\r", "\r" );
+			text = text.replace( "\\n", "\n" );
+			text = text.replace( "\\t", "\t" );
 			t.text = text;
 			t.width = child.width;
 			t.height = child.height;
@@ -207,8 +211,8 @@
 		}
 		
 		// TODO Parse BFButton and addChild objects inside Button
-		private function addButton( objectClass : Class , child : BFButton ) : Button {
-			var bt : Button = new objectClass( getTexture( child , child.upState , child.width , child.height ) ) as Button;
+		private function addButton( objectClass : Class, child : BFButton ) : Button {
+			var bt : Button = new objectClass( getTexture( child, child.upState, child.width, child.height ) ) as Button;
 			bt.fontBold = child.bold;
 			bt.fontColor = child.color;
 			bt.fontName = child.fontName;
@@ -228,20 +232,20 @@
 			if ( bt.hasOwnProperty( "onTouch" ) && _rootObject.hasOwnProperty( child.onTouch ) ) {
 				bt[ "onTouch" ] = _rootObject[ child.onTouch ];
 			} else if ( bt.hasOwnProperty( "onTouch" ) && child.onTouch != "" && !_rootObject.hasOwnProperty( child.onTouch ) ) {
-				throw new Error( "The public method '" + child.onTouch + "' is not defined in " + _rootObject ) ;
+				throw new Error( "The public method '" + child.onTouch + "' is not defined in " + _rootObject );
 			}
 			return bt;
 		}
 		
-		private function getTexture( child : BFObject , textureName : String , w : Number , h : Number ) : Texture {
+		private function getTexture( child : BFObject, textureName : String, w : Number, h : Number ) : Texture {
 			if ( textureName == "" ) {
 				//trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
-				return Texture.empty( w , h );
+				return Texture.empty( w, h );
 			} else {
 				var tex : Texture = _assetManager.getTexture( textureName );
 				if ( tex == null ) {
-					trace( new Error( "Texture '" + textureName + "' defined in '" + child + " - name: " + child.name + "' in " + _displayObject + " doesn't exist. Default texture used." ));
-					return Texture.empty( w , h );
+					trace( new Error( "Texture '" + textureName + "' defined in '" + child + " - name: " + child.name + "' in " + _displayObject + " doesn't exist. Default texture used." ) );
+					return Texture.empty( w, h );
 				}
 				return tex;
 			}

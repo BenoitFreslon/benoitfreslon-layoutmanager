@@ -9,7 +9,7 @@ package com.benoitfreslon.layoutmanager {
 	 */
 	public class NativeLayout extends MovieClip {
 		
-		public var clickFunction:Function = null;
+		public var clickFunction : Function = null;
 		
 		public function NativeLayout() {
 			super();
@@ -19,7 +19,7 @@ package com.benoitfreslon.layoutmanager {
 		 *
 		 * @param	bt
 		 */
-		public function click( bt:NativeSimpleButton ):void {
+		public function click( bt : NativeSimpleButton ) : void {
 			trace( "NativeMenu", bt, clickFunction );
 			if ( clickFunction != null ) {
 				clickFunction( bt );

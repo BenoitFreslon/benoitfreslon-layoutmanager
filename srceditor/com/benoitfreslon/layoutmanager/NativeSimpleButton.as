@@ -15,13 +15,13 @@
 			addEventListener( Event.ADDED_TO_STAGE, added );
 		}
 		
-		private function added( e:Event ):void {
+		private function added( e : Event ) : void {
 			removeEventListener( Event.ADDED_TO_STAGE, added );
 			addEventListener( Event.REMOVED_FROM_STAGE, removed );
 			addEventListener( MouseEvent.CLICK, click );
 		}
 		
-		private function removed( e:Event ):void {
+		private function removed( e : Event ) : void {
 			removeEventListener( Event.REMOVED_FROM_STAGE, removed );
 			removeEventListener( MouseEvent.CLICK, click );
 		}
@@ -30,7 +30,7 @@
 		 *
 		 * @param	e
 		 */
-		protected function click( e:MouseEvent ):void {
+		protected function click( e : MouseEvent ) : void {
 			( MovieClip( parent ) as NativeLayout ).click( e.currentTarget as NativeSimpleButton );
 		}
 	}

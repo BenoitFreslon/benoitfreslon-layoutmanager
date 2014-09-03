@@ -10,27 +10,22 @@
 	 */
 	public class ButtonExtended extends Button {
 		
-		
-		public override function get upState():Texture 
-		{
+		public override function get upState() : Texture {
 			return super.upState;
 		}
 		
-		public override function set upState(value:Texture):void 
-		{
+		public override function set upState( value : Texture ) : void {
 			_upStateTemp = value;
 			super.upState = value;
 		}
 		protected var _upState : Texture;
-		protected var _upStateTemp:Texture;
+		protected var _upStateTemp : Texture;
 		
-		public function get overState():Texture 
-		{
+		public function get overState() : Texture {
 			return _overState;
 		}
 		
-		public function set overState(value:Texture):void 
-		{
+		public function set overState( value : Texture ) : void {
 			_overState = value;
 		}
 		protected var _overState : Texture;
@@ -38,7 +33,7 @@
 		protected var isRollOver : Boolean = false;
 		
 		public var onTouch : Function = function( e : Event ) : void {
-			throw new Error("ButtonExtented: The 'onTouch' method is not defined in " + this.name + ".") ;
+			throw new Error( "ButtonExtented: The 'onTouch' method is not defined in " + this.name + "." );
 		};
 		public var onRollOver : Function = function() : void {
 		
@@ -59,14 +54,15 @@
 		}
 		
 		protected function handleTouch( te : TouchEvent ) : void {
-			if (!enabled) return;
+			if ( !enabled )
+				return;
 			if ( te.getTouch( this, TouchPhase.HOVER ) ) {
 				if ( !isRollOver ) {
 					rollOver();
 					isRollOver = true;
 				}
-			} else if (!te.getTouch( this, TouchPhase.BEGAN ) && !te.getTouch( this, TouchPhase.STATIONARY ) && !te.getTouch( this, TouchPhase.MOVED ) && !te.getTouch( this, TouchPhase.ENDED )  ) {
-				if (isRollOver) {
+			} else if ( !te.getTouch( this, TouchPhase.BEGAN ) && !te.getTouch( this, TouchPhase.STATIONARY ) && !te.getTouch( this, TouchPhase.MOVED ) && !te.getTouch( this, TouchPhase.ENDED ) ) {
+				if ( isRollOver ) {
 					rollOut();
 					isRollOver = false;
 				}
@@ -93,7 +89,7 @@
 		protected function triggered( e : Event ) : void {
 			onRollOut();
 			onTouch( e );
-			
+		
 		}
 		
 		protected function removed( e : Event ) : void {
