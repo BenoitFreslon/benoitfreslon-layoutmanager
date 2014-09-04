@@ -16,7 +16,7 @@ __Multiresolution support__
 
 * Use Flash IDE to build visual layouts.
 * Build your layouts with native Starling objects (Sprite, Image, TextField, Button).
-* Use the custom Flash components and use the LayoutLoader class to display the layout in real time in your game.
+* Use the custom Flash components and use the LayoutManager class to display the layout in real time in your game.
 * Use the basic class of Starling or use your own classes.
 * Use native properties of Starling classes (texture, text, color, font, etc.).
 * Use instance name in Flash IDE and get objects in your class.
@@ -131,10 +131,10 @@ Parameters:
 In your code source ;
 
 * Create a **starling.display.Sprite** class or a **citrus.core.starling.StarlingState**
-* Import the **LayoutLaoder** class in your class:
+* Import the **LayoutManager** class in your class:
 
 ```
-import com.benoitfreslon.layoutmanager.LayoutLoader;
+import com.benoitfreslon.layoutmanager.LayoutManager;
 ```
 
 * Add all your assets in your **AssetManager** instance like this :
@@ -149,11 +149,11 @@ and
 var assets:AssetManager = new AssetManager();
 ```
 
-* Create an instance of the **LayoutLoader** class to load a layout.
+* Create an instance of the **LayoutManager** class to load a layout.
 * (Optional) Define the callBack method `onLoad` in your class.
 
 ```
-var ll:LayoutLoader = new LayoutLoader();
+var ll:LayoutManager = new LayoutManager();
 ll.loadLayout(this, MainMenuLayout, assets, onLoad);
 ```
 
@@ -164,7 +164,7 @@ ll.loadLayout(this, MainMenuLayout, assets, onLoad);
 package  
 {
 	import starling.display.Sprite;
-	import com.benoitfreslon.layoutmanager.LayoutLoader;
+	import com.benoitfreslon.layoutmanager.LayoutManager;
 	import starling.events.Event;
 	
 	/**
@@ -188,8 +188,8 @@ package
         {
 			super();
 			// Define baseWidth and baseHeight in order to scale all layouts according the screen size. Useful for mobile applications.
-			LayoutLoader.baseWidth = 800;
-			LayoutLoader.baseHeight = 600;
+			LayoutManager.baseWidth = 800;
+			LayoutManager.baseHeight = 600;
 			
 			var texture : Texture = Texture.fromBitmap( new AtlasTexture() );
 			var xml : XML = XML( new AtlasXml() );
@@ -197,7 +197,7 @@ package
 			assets = new AssetManager();
 			assets.addTextureAtlas( "assets", atlas );
 			
-			var ll:LayoutLoader = new LayoutLoader()
+			var ll:LayoutManager = new LayoutManager()
 			ll.loadLayout(this, DemoLayout, assets, onLoad);
         }
 		

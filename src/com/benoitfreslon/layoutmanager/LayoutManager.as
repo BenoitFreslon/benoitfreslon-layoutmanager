@@ -22,7 +22,7 @@
 	 * @version 1.04
 	 * @author Benoît Freslon
 	 */
-	public class LayoutLoader {
+	public class LayoutManager {
 		static public var debug : Boolean = false;
 		/**
 		 * Base width of the layout
@@ -46,9 +46,8 @@
 		/**
 		 * Loader of Layout class.
 		 */
-		public function LayoutLoader() {
+		public function LayoutManager() {
 			super();
-			debug = Capabilities.isDebugger
 			_stageWidth = Starling.current.stage.stageWidth;
 			_stageHeight = Starling.current.stage.stageHeight;
 		}
@@ -132,6 +131,8 @@
 						} catch ( e : Error ) {
 							throw new Error( "The className [" + curClassName + "] defined in " + child + " [" + child.name + "] doesn't exit." );
 						}
+						var r : Number = child.rotation;
+						child.rotation = 0;
 						
 						var obj : DisplayObject;
 						if ( child.mainClass == "starling.display.Image" ) {
@@ -142,6 +143,8 @@
 							obj = addTextField( objectClass, child as BFTextField );
 						} else if ( child.mainClass == "starling.display.Sprite" ) {
 							obj = addSprite( objectClass, child as BFSprite );
+						} else if ( child.mainClass == "starling.display.Quad" ) {
+							obj = addQuad( objectClass, child as BFQuad );
 						} else {
 							throw new Error( "No mainClass defined in [" + child + "]" );
 						}
@@ -162,8 +165,6 @@
 						obj.y = int( child.y );
 						//obj.scaleX = child.scaleX;
 						//obj.scaleY = child.scaleY;
-						var r : Number = child.rotation;
-						child.rotation = 0;
 						obj.rotation = r * Math.PI / 180;
 						obj.visible = child.visible;
 						obj.touchable = child.touchable;
@@ -237,6 +238,13 @@
 			t.vAlign = child.vAlign;
 			t.width = child.width;
 			return t;
+		}
+		
+		private function addQuad( objectClass : Class, child : BFQuad ) : Quad {
+			var q : Quad = new Quad( child.width, child.height, child.transform.colorTransform.color );
+			q.pivotX = int( q.width * child.pivotX );
+			q.pivotY = int( q.height * child.pivotY );
+			return q;
 		}
 		
 		// TODO Parse BFButton and addChild objects inside Button

@@ -1,5 +1,5 @@
 package {
-	import com.benoitfreslon.layoutmanager.LayoutLoader;
+	import com.benoitfreslon.layoutmanager.LayoutManager;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -30,7 +30,7 @@ package {
 			assets = new AssetManager();
 			assets.addTextureAtlas( "assets", atlas );
 			
-			var ll : LayoutLoader = new LayoutLoader()
+			var ll : LayoutManager = new LayoutManager()
 			ll.loadLayout( this, DemoLayout, assets, onLoad );
 		}
 		

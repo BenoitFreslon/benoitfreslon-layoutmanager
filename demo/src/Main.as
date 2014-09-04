@@ -1,5 +1,5 @@
 package {
-	import com.benoitfreslon.layoutmanager.LayoutLoader;
+	import com.benoitfreslon.layoutmanager.LayoutManager;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -23,10 +23,10 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
 			
 			// LayoutLoader Configuration
-			LayoutLoader.debug = true;
+			LayoutManager.debug = true;
 			// Define baseWidth and baseHeight in order to scale all layouts according the screen size. Useful for mobile applications.
-			LayoutLoader.baseWidth = 800;
-			LayoutLoader.baseHeight = 600;
+			LayoutManager.baseWidth = 800;
+			LayoutManager.baseHeight = 600;
 			
 			// Create a Starling instance that will run the "Game" class
 			mStarling = new Starling( Game, stage );

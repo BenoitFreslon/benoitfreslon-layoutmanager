@@ -74,7 +74,7 @@
 		}
 		private var _border : Boolean = false;
 		
-		[Inspectable( name="color",type="Color",defaultValue="#FFFFFF" )]
+		[Inspectable( name="color",type="Color",defaultValue="#000000" )]
 		public function get color() : uint {
 			return _color;
 		}
@@ -84,7 +84,7 @@
 			_color = value;
 			draw();
 		}
-		private var _color : uint = 0xFFFFFF;
+		private var _color : uint = 0x000000;
 		
 		[Inspectable( name="fontName",type="Font Name",defaultValue="Verdana" )]
 		public function get fontName() : String {
