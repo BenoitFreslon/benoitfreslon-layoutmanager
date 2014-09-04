@@ -4,7 +4,13 @@ benoitfreslon-layoutmanager
 A visual layout manager. Build with Flash IDE for the Starling framework and compatible with the CitrusEngine framework.
 Usefull to build simple game interfaces, huds, menus, popups, etc.
 
+__Flash Pro IDE to Starling in one click__
+
 ![LayoutManager](https://raw.githubusercontent.com/BenoitFreslon/benoitfreslon-layoutmanager/master/demo/demo.jpg)
+
+__Multiresolution support__
+
+![LayoutManager](https://raw.githubusercontent.com/BenoitFreslon/benoitfreslon-layoutmanager/master/demo/demo2.jpg)
 
 ## Description
 
@@ -17,7 +23,7 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 * Add custom parameters in your own visual objects.
 * Use the Sprite container to embed several objects in one visual object.
 * Just build one lightweight .SWC file with Flash IDE with all your layouts.
-* __[NEW] All layouts are scaled according the screen size and the screen format. Useful for movile applications.__
+* __[NEW] Multiresolution support: All layouts are scaled according the screen size and the screen format. Useful for mobile applications.__
 
 ### TODO
 * Build AIR Application.

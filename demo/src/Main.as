@@ -10,7 +10,7 @@ package {
 	 * @author Benoît Freslon
 	 */
 	
-	[SWF( width="800",height="600",frameRate="60",backgroundColor="#CCCCCC" )]
+	[SWF( width="1136",height="640",frameRate="60",backgroundColor="#CCCCCC" )]
 	
 	public class Main extends Sprite {
 		
