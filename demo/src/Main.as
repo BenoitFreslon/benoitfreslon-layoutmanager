@@ -1,12 +1,9 @@
 package {
+	import com.benoitfreslon.layoutmanager.LayoutLoader;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import starling.core.Starling;
-	import starling.textures.Texture;
-	import starling.textures.TextureAtlas;
-	import starling.utils.AssetManager;
-	
 	
 	/**
 	 * ...
@@ -17,15 +14,19 @@ package {
 	
 	public class Main extends Sprite {
 		
-
-		
 		private var mStarling : Starling;
 		
 		public function Main() : void {
-			
+			trace( "Main" );
 			// These settings are recommended to avoid problems with touch handling
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			
+			// LayoutLoader Configuration
+			LayoutLoader.debug = true;
+			// Define baseWidth and baseHeight in order to scale all layouts according the screen size. Useful for mobile applications.
+			LayoutLoader.baseWidth = 800;
+			LayoutLoader.baseHeight = 600;
 			
 			// Create a Starling instance that will run the "Game" class
 			mStarling = new Starling( Game, stage );

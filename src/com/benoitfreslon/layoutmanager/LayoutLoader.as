@@ -4,6 +4,7 @@
 	import flash.events.Event;
 	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
+	import starling.core.Starling;
 	
 	import starling.display.Button;
 	import starling.display.ButtonExtended;
@@ -22,14 +23,25 @@
 	 * @author Benoît Freslon
 	 */
 	public class LayoutLoader {
+		static public var debug : Boolean = false;
+		/**
+		 * Base width of the layout
+		 */
+		static public var baseWidth : Number;
+		/**
+		 * Base height of the layout
+		 */
+		static public var baseHeight : Number;
+		
 		private var _movieclip : MovieClip;
 		private var _displayObject : DisplayObjectContainer;
 		private var _rootObject : DisplayObjectContainer;
 		private var _assetManager : AssetManager;
-		static public var debug : Boolean = false;
 		private var onLoad : Function = function() : void {
 		
-		};
+		}
+		private var _stageWidth : Number;
+		private var _stageHeight : Number;
 		
 		/**
 		 * Loader of Layout class.
@@ -37,6 +49,8 @@
 		public function LayoutLoader() {
 			super();
 			debug = Capabilities.isDebugger
+			_stageWidth = Starling.current.stage.stageWidth;
+			_stageHeight = Starling.current.stage.stageHeight;
 		}
 		
 		/**
@@ -48,48 +62,56 @@
 		 * @param	assetManager The AssetManager instance where all assets are loaded.
 		 * @param	callBack The callback function when the layout is loaded and displayed.
 		 */
-		public function loadLayout( rootObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
-			
-			if ( debug )
-				trace( "LayoutLoader: loadLayout", rootObject, LayoutClass, assetManager, callBack );
-			
-			_rootObject = rootObject;
-			_displayObject = rootObject;
-			_assetManager = assetManager;
-			_movieclip = new LayoutClass();
-			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
-			if ( onLoad != null )
-				onLoad = callBack
+		public function loadLayout( rootObject : DisplayObjectContainer, layoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+			loadLayoutIn( rootObject, rootObject, layoutClass, assetManager, callBack );
 		}
 		
-		public function loadLayoutIn( rootObject : DisplayObjectContainer, displayObject : DisplayObjectContainer, LayoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
+		public function loadLayoutIn( rootObject : DisplayObjectContainer, displayObject : DisplayObjectContainer, layoutClass : Class, assetManager : AssetManager, callBack : Function = null ) : void {
 			if ( debug )
-				trace( "LayoutLoader: loadLayoutIn", rootObject, displayObject, LayoutClass, assetManager, callBack );
+				trace( "[LayoutLoader] loadLayoutIn", rootObject, displayObject, layoutClass, assetManager, callBack );
 			
 			_rootObject = rootObject
 			_displayObject = displayObject;
 			_assetManager = assetManager;
-			_movieclip = new LayoutClass();
+			_movieclip = new layoutClass();
 			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
 			if ( onLoad != null )
 				onLoad = callBack
+			
+			var scaleFactor : Number = 1;
+			var factorX : Number = _stageWidth / baseWidth;
+			var factorY : Number = _stageHeight / baseHeight;
+			
+			// Scale screen
+			if ( baseHeight > 0 && baseWidth > 0 ) {
+				if ( factorX < factorY )
+					scaleFactor = factorX;
+				else
+					scaleFactor = factorY;
+				
+				_displayObject.scaleX *= scaleFactor;
+				_displayObject.scaleY *= scaleFactor
+			}
+			
+			_displayObject.x = _stageWidth / 2;
+			_displayObject.y = _stageHeight / 2;
+		
 		}
 		
 		private function layoutLoaded( e : Event ) : void {
 			
 			if ( debug )
-				trace( "LayoutLoader: layoutLoaded" );
-			
+				trace( "[LayoutLoader] layoutLoaded" );
 			_movieclip.removeEventListener( Event.ENTER_FRAME, layoutLoaded );
 			parseMovieClip( _movieclip, _rootObject, _displayObject );
 			loaded();
 		}
 		
 		private function parseMovieClip( mc : MovieClip, root : DisplayObjectContainer, container : DisplayObjectContainer ) : void {
-			var child : BFObject;
+			var child : BFDisplayObject;
 			var n : int = mc.numChildren;
 			for ( var i : uint = 0; i < n; ++i ) {
-				child = mc.getChildAt( i ) as BFObject;
+				child = mc.getChildAt( i ) as BFDisplayObject;
 				if ( child ) {
 					
 					if ( child.mainClass ) {
@@ -97,12 +119,18 @@
 						var a : Array = [ ButtonExtended ];
 						
 						var objectClass : Class;
-						if ( debug )
-							trace( "LayoutLoader: child.className", child.className );
+						var curClassName : String;
 						if ( child.className ) {
-							objectClass = getDefinitionByName( child.className ) as Class;
+							curClassName = child.className;
 						} else {
-							objectClass = getDefinitionByName( child.mainClass ) as Class;
+							curClassName = child.mainClass;
+						}
+						if ( debug )
+							trace( "[LayoutLoader] adding", curClassName + " name: " + child.name );
+						try {
+							objectClass = getDefinitionByName( curClassName ) as Class;
+						} catch ( e : Error ) {
+							throw new Error( "The className [" + curClassName + "] defined in " + child + " [" + child.name + "] doesn't exit." );
 						}
 						
 						var obj : DisplayObject;
@@ -115,7 +143,7 @@
 						} else if ( child.mainClass == "starling.display.Sprite" ) {
 							obj = addSprite( objectClass, child as BFSprite );
 						} else {
-							throw new Error( "No mainClass defined in '" + child + "'" );
+							throw new Error( "No mainClass defined in [" + child + "]" );
 						}
 						
 						if ( child.hasOwnProperty( "params" ) ) {
@@ -124,22 +152,22 @@
 									obj[ metatags ] = child.params[ metatags ];
 							}
 						}
+						obj.alpha = child.alpha;
+						obj.blendMode = child.blendMode;
+						if ( container.getChildByName( child.name ) ) {
+							throw new Error( "And object [" + curClassName + "] with the same name already exists in " + child.parent + " with the instance name [" + child.name + "].\rRemove or modify the instance name [" + child.name + "] in " + child.parent + " in Flash Pro." );
+						}
 						obj.name = child.name;
-						
 						obj.x = int( child.x );
 						obj.y = int( child.y );
 						//obj.scaleX = child.scaleX;
 						//obj.scaleY = child.scaleY;
-						if ( child.flipX ) {
-							obj.scaleX = -1;
-						}
-						if ( child.flipY ) {
-							obj.scaleY = -1;
-						}
-						obj.alpha = child.alpha;
-						obj.rotation = child.rotation;
-						obj.visible = child.isVisible;
-						
+						var r : Number = child.rotation;
+						child.rotation = 0;
+						obj.rotation = r * Math.PI / 180;
+						obj.visible = child.visible;
+						obj.touchable = child.touchable;
+						obj.useHandCursor = obj.useHandCursor;
 						container.addChild( obj );
 						
 						if ( obj.hasOwnProperty( "tag" ) ) {
@@ -151,11 +179,10 @@
 						if ( _rootObject.hasOwnProperty( child.name ) ) {
 							_rootObject[ child.name ] = obj as objectClass;
 						} else if ( child.name.split( "__id" ).length == 1 && child.name.split( "instance" ).length == 1 ) {
-							throw new Error( "No public property '" + child.name + "' declared in " + _rootObject );
+							throw new Error( "No public property [" + child.name + "] declared in " + _rootObject + ".\rRemove or modify the instance name [" + child.name + "] in Flash Pro or add in " + _rootObject + ":\r\tpublic var " + child.name + ":" + curClassName + ";" );
 						}
 					} else {
-						
-							//trace( new Error( "No className defined " + child ) );
+						//trace( new Error( "No className defined " + child ) );
 					}
 				}
 			}
@@ -174,6 +201,8 @@
 			var img : Image = new objectClass( tex ) as Image;
 			img.pivotX = int( img.width * child.pivotX );
 			img.pivotY = int( img.height * child.pivotY );
+			img.scaleX = child.scaleX;
+			img.scaleY = child.scaleY;
 			return img;
 		}
 		
@@ -185,19 +214,18 @@
 		
 		private function addTextField( objectClass : Class, child : BFTextField ) : TextField {
 			var t : TextField = new objectClass( child.width, child.height, "" ) as TextField;
-			t.kerning = child.kerning;
-			t.batchable = child.batchable;
 			t.autoScale = child.autoScale;
 			t.autoSize = child.autoSize;
+			t.batchable = child.batchable;
+			t.bold = child.bold;
+			t.border = child.border;
+			t.color = child.color;
 			t.fontName = child.fontName;
 			t.fontSize = child.fontSize;
-			t.color = child.color;
 			t.hAlign = child.hAlign;
-			t.vAlign = child.vAlign;
-			t.bold = child.bold;
+			t.height = child.height;
 			t.italic = child.italic;
-			t.border = child.border;
-			t.underline = child.underline;
+			t.kerning = child.kerning;
 			t.pivotX = int( t.width * child.pivotX );
 			t.pivotY = int( t.height * child.pivotY );
 			var text : String = child.text;
@@ -205,23 +233,27 @@
 			text = text.replace( "\\n", "\n" );
 			text = text.replace( "\\t", "\t" );
 			t.text = text;
+			t.underline = child.underline;
+			t.vAlign = child.vAlign;
 			t.width = child.width;
-			t.height = child.height;
 			return t;
 		}
 		
 		// TODO Parse BFButton and addChild objects inside Button
 		private function addButton( objectClass : Class, child : BFButton ) : Button {
 			var bt : Button = new objectClass( getTexture( child, child.upState, child.width, child.height ) ) as Button;
-			bt.fontBold = child.bold;
-			bt.fontColor = child.color;
+			bt.alphaWhenDisabled = child.alphaWhenDisabled;
+			bt.enabled = child.enabled;
+			bt.fontBold = child.fontBold;
+			bt.fontColor = child.fontColor;
 			bt.fontName = child.fontName;
 			bt.fontSize = child.fontSize;
-			bt.alphaWhenDisabled = child.alphaWhenDisabled;
-			bt.scaleWhenDown = child.scaleWhenDown;
-			bt.text = child.text;
 			bt.pivotX = int( bt.width * child.pivotX );
 			bt.pivotY = int( bt.height * child.pivotY );
+			bt.scaleWhenDown = child.scaleWhenDown;
+			bt.text = child.text;
+			bt.textHAlign = child.textHAlign;
+			bt.textVAlign = child.textVAlign;
 			
 			if ( child.downState )
 				bt.downState = _assetManager.getTexture( child.downState );
@@ -232,12 +264,12 @@
 			if ( bt.hasOwnProperty( "onTouch" ) && _rootObject.hasOwnProperty( child.onTouch ) ) {
 				bt[ "onTouch" ] = _rootObject[ child.onTouch ];
 			} else if ( bt.hasOwnProperty( "onTouch" ) && child.onTouch != "" && !_rootObject.hasOwnProperty( child.onTouch ) ) {
-				throw new Error( "The public method '" + child.onTouch + "' is not defined in " + _rootObject );
+				throw new Error( "The public method [" + child.onTouch + "] is not defined in " + _rootObject + ".\rRemove the [onTouch] method name in [" + child + "] with the instance name [" + child.name + "] Flash Pro or add`in " + _rootObject + ":\r\tpublic function " + child.onTouch + "(e:starling.event.Event):void {\r\t}" );
 			}
 			return bt;
 		}
 		
-		private function getTexture( child : BFObject, textureName : String, w : Number, h : Number ) : Texture {
+		private function getTexture( child : BFDisplayObject, textureName : String, w : Number, h : Number ) : Texture {
 			if ( textureName == "" ) {
 				//trace( new Error( "No texture defined in '" + child + " - name: "+child.name+"' in "+_displayObject+". Default texture used." ) );
 				return Texture.empty( w, h );

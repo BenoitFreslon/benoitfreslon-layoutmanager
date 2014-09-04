@@ -21,16 +21,16 @@
 		protected var _upState : Texture;
 		protected var _upStateTemp : Texture;
 		
-		public override function get overState() : Texture {
+		public function get overState() : Texture {
 			return _overState;
 		}
 		
-		public override function set overState( value : Texture ) : void {
+		public function set overState( value : Texture ) : void {
 			_overState = value;
 		}
 		protected var _overState : Texture;
 		
-		protected var isRollOver : Boolean = false;
+		protected var _isRollOver : Boolean = false;
 		
 		public var onTouch : Function = function( e : Event ) : void {
 			throw new Error( "ButtonExtented: The 'onTouch' method is not defined in " + this.name + "." );
@@ -57,14 +57,14 @@
 			if ( !enabled )
 				return;
 			if ( te.getTouch( this, TouchPhase.HOVER ) ) {
-				if ( !isRollOver ) {
+				if ( !_isRollOver ) {
 					rollOver();
-					isRollOver = true;
+					_isRollOver = true;
 				}
 			} else if ( !te.getTouch( this, TouchPhase.BEGAN ) && !te.getTouch( this, TouchPhase.STATIONARY ) && !te.getTouch( this, TouchPhase.MOVED ) && !te.getTouch( this, TouchPhase.ENDED ) ) {
-				if ( isRollOver ) {
+				if ( _isRollOver ) {
 					rollOut();
-					isRollOver = false;
+					_isRollOver = false;
 				}
 			}
 		}
@@ -89,7 +89,6 @@
 		protected function triggered( e : Event ) : void {
 			onRollOut();
 			onTouch( e );
-		
 		}
 		
 		protected function removed( e : Event ) : void {

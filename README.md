@@ -17,10 +17,9 @@ Usefull to build simple game interfaces, huds, menus, popups, etc.
 * Add custom parameters in your own visual objects.
 * Use the Sprite container to embed several objects in one visual object.
 * Just build one lightweight .SWC file with Flash IDE with all your layouts.
+* __[NEW] All layouts are scaled according the screen size and the screen format. Useful for movile applications.__
 
 ### TODO
-* Use the scale property from MovieClip.
-* Use relative and absolute coordinates for HD format.
 * Build AIR Application.
 * Display assets in the layout editor.
 
@@ -182,6 +181,10 @@ package
         public function Game()
         {
 			super();
+			// Define baseWidth and baseHeight in order to scale all layouts according the screen size. Useful for mobile applications.
+			LayoutLoader.baseWidth = 800;
+			LayoutLoader.baseHeight = 600;
+			
 			var texture : Texture = Texture.fromBitmap( new AtlasTexture() );
 			var xml : XML = XML( new AtlasXml() );
 			var atlas : TextureAtlas = new TextureAtlas( texture, xml );

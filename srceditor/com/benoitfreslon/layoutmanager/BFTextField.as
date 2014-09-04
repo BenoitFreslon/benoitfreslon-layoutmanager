@@ -1,12 +1,11 @@
 ﻿package com.benoitfreslon.layoutmanager {
 	import flash.text.TextField;
-	import flash.text.TextFieldAutoSize;
 	
 	/**
 	 * ...
 	 * @author Benoît Freslon
 	 */
-	public class BFTextField extends BFObject {
+	public class BFTextField extends BFDisplayObject {
 		
 		[Inspectable( name="autoScale",type="Boolean",defaultValue="false" )]
 		public function get autoScale() : Boolean {
@@ -17,18 +16,7 @@
 			_autoScale = value;
 			draw();
 		}
-		private var _autoScale
-		
-		[Inspectable( name="batchable",type="Boolean",defaultValue="false" )]
-		public function get batchable() : Boolean {
-			return _batchable;
-		}
-		
-		public function set batchable( value : Boolean ) : void {
-			_batchable = value;
-			draw();
-		}
-		private var _batchable
+		private var _autoScale:Boolean = false;
 		
 		[Inspectable( name="kerning",type="Boolean",defaultValue="true" )]
 		public function get kerning() : Boolean {
@@ -39,7 +27,7 @@
 			_kerning = value;
 			draw();
 		}
-		private var _kerning
+		private var _kerning:Boolean = true;
 		
 		[Inspectable( name="autoSize",type="List",defaultValue="none",enumeration="bothDirections, horizontal, none, vertical" )]
 		public function get autoSize() : String {
@@ -51,6 +39,17 @@
 			draw();
 		}
 		private var _autoSize : String = "none";
+		
+		[Inspectable( name="batchable",type="Boolean",defaultValue="false" )]
+		public function get batchable() : Boolean {
+			return _batchable;
+		}
+		
+		public function set batchable( value : Boolean ) : void {
+			_batchable = value;
+			draw();
+		}
+		private var _batchable : Boolean = false;
 		
 		[Inspectable( name="bold",type="Boolean",defaultValue="false" )]
 		public function get bold() : Boolean {
@@ -75,7 +74,7 @@
 		}
 		private var _border : Boolean = false;
 		
-		[Inspectable( name="color",type="Color",defaultValue="#000000" )]
+		[Inspectable( name="color",type="Color",defaultValue="#FFFFFF" )]
 		public function get color() : uint {
 			return _color;
 		}
@@ -109,7 +108,7 @@
 		}
 		private var _fontSize : Number = 12;
 		
-		[Inspectable( name="hAlign",type="List",defaultValue="left",enumeration="center,left,right" )]
+		[Inspectable( name="hAlign",type="List",defaultValue="center",enumeration="center,left,right" )]
 		public function get hAlign() : String {
 			return _hAlign;
 		}
@@ -117,9 +116,9 @@
 		public function set hAlign( value : String ) : void {
 			_hAlign = value;
 		}
-		private var _hAlign : String = "left";
+		private var _hAlign : String = "center";
 		
-		[Inspectable( name="vAlign",type="List",defaultValue="top",enumeration="center,bottom,top" )]
+		[Inspectable( name="vAlign",type="List",defaultValue="center",enumeration="center,bottom,top" )]
 		public function get vAlign() : String {
 			return _vAlign;
 		}
@@ -127,7 +126,7 @@
 		public function set vAlign( value : String ) : void {
 			_vAlign = value;
 		}
-		private var _vAlign : String = "top";
+		private var _vAlign : String = "center";
 		
 		[Inspectable( name="text",variable="text",type="String" )]
 		public function set text( t : String ) : void {
