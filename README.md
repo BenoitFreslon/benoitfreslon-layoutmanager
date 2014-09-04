@@ -1,7 +1,7 @@
 benoitfreslon-layoutmanager
 ===========================
 
-A visual layout manager. Build with Flash IDE for the Starling framework and compatible with the CitrusEngine framework.
+A visual layout manager. Build with Flash IDE for the [Starling](https://github.com/PrimaryFeather/Starling-Framework) framework and compatible with the [CitrusEngine](https://github.com/alamboley/Citrus-Engine) framework.
 Usefull to build simple game interfaces, huds, menus, popups, etc.
 
 __Flash Pro IDE to Starling in one click__
@@ -31,7 +31,7 @@ __Multiresolution support__
 
 ### Default values
 
-For all objects the origin is in the **center** of the object.
+For all objects, including the layouts, the origin is in the **center** of the MovieClip.
 All objects has a default className (eg: BFImage > starling.display.Image).
 
 ### Custom parameters
