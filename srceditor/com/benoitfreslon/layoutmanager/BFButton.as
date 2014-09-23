@@ -38,7 +38,7 @@ package com.benoitfreslon.layoutmanager {
 		[Inspectable( name="fontColor",type="Color",defaultValue="0x000000" )]
 		public var fontColor : uint = 0x000000;
 		
-		[Inspectable( name="fontName",type="String",defaultValue="Verdana" )]
+		[Inspectable( name="fontName",type="Font Name",defaultValue="Verdana" )]
 		public var fontName : String = "Verdana";
 		
 		[Inspectable( name="fontSize",type="Number",defaultValue="12" )]
