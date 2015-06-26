@@ -4,6 +4,7 @@
 	import flash.events.Event;
 	import flash.system.Capabilities;
 	import flash.utils.getDefinitionByName;
+	import flash.utils.setTimeout;
 	import starling.core.Starling;
 	
 	import starling.display.Button;
@@ -73,7 +74,9 @@
 			_displayObject = displayObject;
 			_assetManager = assetManager;
 			_movieclip = new layoutClass();
-			_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
+			//_movieclip.addEventListener( Event.ENTER_FRAME, layoutLoaded );
+			//_movieclip.addEventListener( Event.ADDED, layoutLoaded );
+			setTimeout (layoutLoaded,0);
 			if ( onLoad != null )
 				onLoad = callBack
 			
@@ -97,11 +100,12 @@
 		
 		}
 		
-		private function layoutLoaded( e : Event ) : void {
+		private function layoutLoaded( e : Event = null ) : void {
 			
 			if ( debug )
 				trace( "[LayoutLoader] layoutLoaded" );
-			_movieclip.removeEventListener( Event.ENTER_FRAME, layoutLoaded );
+			_movieclip.removeEventListener ( Event.ENTER_FRAME, layoutLoaded );
+			_movieclip.removeEventListener( Event.ADDED, layoutLoaded );
 			parseMovieClip( _movieclip, _rootObject, _displayObject );
 			loaded();
 		}
@@ -109,8 +113,12 @@
 		private function parseMovieClip( mc : MovieClip, root : DisplayObjectContainer, container : DisplayObjectContainer ) : void {
 			var child : BFDisplayObject;
 			var n : int = mc.numChildren;
-			for ( var i : uint = 0; i < n; ++i ) {
-				child = mc.getChildAt( i ) as BFDisplayObject;
+			if ( debug )
+				trace( "[LayoutLoader] numChildren "+ n );
+			for ( var i : uint = 0; i < n; i++ ) {
+				child = mc.getChildAt ( i ) as BFDisplayObject;
+				if ( debug )
+					trace( "[LayoutLoader] child "+i+" "+ child );
 				if ( child ) {
 					
 					if ( child.mainClass ) {
